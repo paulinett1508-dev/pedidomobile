@@ -12,9 +12,10 @@ import Logo from './Logo'
 interface DashboardProps {
   meta: RcaMeta
   items: PedidoItem[]
+  isAdmin?: boolean
 }
 
-export default function Dashboard({ meta, items }: DashboardProps) {
+export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
   const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
 
   const filtered = useMemo(() => {
@@ -66,14 +67,32 @@ export default function Dashboard({ meta, items }: DashboardProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {isAdmin && (
+              <span
+                className="px-2 py-1 rounded text-xs font-bold tracking-wide"
+                style={{ background: 'var(--amber)', color: '#000' }}
+              >
+                VISÃO ADMIN
+              </span>
+            )}
             <ThemeToggle />
-            <button
-              onClick={handleLogout}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
-              style={{ background: 'var(--surface2)', color: 'var(--muted)' }}
-            >
-              Sair
-            </button>
+            {isAdmin ? (
+              <a
+                href="/admin"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
+                style={{ background: 'var(--surface2)', color: 'var(--highlight)' }}
+              >
+                ← Voltar ao painel
+              </a>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
+                style={{ background: 'var(--surface2)', color: 'var(--muted)' }}
+              >
+                Sair
+              </button>
+            )}
           </div>
         </div>
       </header>
