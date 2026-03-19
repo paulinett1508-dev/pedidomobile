@@ -1,32 +1,41 @@
 export interface PedidoItem {
-  pedido: string
-  codCliente: string
-  cliente: string
-  produto: string
-  qtde: number
-  preco: number
-  total: number
+  pedido:          string
+  data:            string
+  situacao:        string
+  codCliente:      string
+  cliente:         string
+  clienteFantasia: string
+  municipio:       string
+  estado:          string
+  produto:         string
+  codigo:          string
+  unidade:         string
+  qtde:            number
+  preco:           number
+  desconto:        number
+  total:           number
+  tabelaPreco:     string
+  planoPagto:      string
+  observacoes:     string
+  dataEntrega:     string
+  ordemCompra:     string
+  totalBruto:      number
+  totalLiquido:    number
 }
 
 export interface RcaMeta {
-  id: string
-  vendedor: string
+  id:           string
   representada: string
-}
-
-export interface User {
-  id: string
-  nome: string
-  role: 'vendor' | 'admin'
+  vendedor?:    string
 }
 
 export interface UsersFile {
   vendorPasswordHash: string
-  adminPasswordHash: string
+  adminPasswordHash:  string
   vendors: Array<{ id: string; nome: string }>
 }
 
 export type SessionPayload = {
   userId: string
-  role: 'vendor' | 'admin'
+  role:   'vendor' | 'admin'
 }

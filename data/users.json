@@ -2,6 +2,26 @@
   "vendorPasswordHash": "$2a$12$bY6ZDe8bbLozvYfSxtwztOdskjZMnQFDuf/hWVEW.PBdZvDX9wuaa",
   "adminPasswordHash": "$2a$12$0OP5bFUr53QfXfvKy9bJNOaOsMqW1LqhsQ71P3xKgtCEqYqL5lkJe",
   "vendors": [
-    { "id": "224", "nome": "Júlio Cesar Lima dos Santos" }
+    { "id": "031", "nome": "Theodoro F Sobral e Cia Ltda" },
+    { "id": "132", "nome": "Vendedor 132" },
+    { "id": "200", "nome": "Vendedor 200" },
+    { "id": "216", "nome": "Vendedor 216" },
+    { "id": "217", "nome": "Vendedor 217" },
+    { "id": "224", "nome": "Júlio Cesar Lima dos Santos" },
+    { "id": "225", "nome": "Vendedor 225" },
+    { "id": "227", "nome": "Vendedor 227" },
+    { "id": "231", "nome": "Vendedor 231" },
+    { "id": "237", "nome": "Vendedor 237" },
+    { "id": "240", "nome": "Vendedor 240" },
+    { "id": "245", "nome": "Vendedor 245" },
+    { "id": "248", "nome": "Vendedor 248" },
+    { "id": "251", "nome": "Vendedor 251" },
+    { "id": "252", "nome": "Vendedor 252" },
+    { "id": "254", "nome": "Vendedor 254" },
+    { "id": "256", "nome": "Vendedor 256" },
+    { "id": "257", "nome": "Vendedor 257" },
+    { "id": "258", "nome": "Vendedor 258" },
+    { "id": "259", "nome": "Vendedor 259" },
+    { "id": "260", "nome": "Vendedor 260" }
   ]
 }

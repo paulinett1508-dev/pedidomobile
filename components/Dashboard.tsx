@@ -15,19 +15,22 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ meta, items }: DashboardProps) {
-  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '' })
+  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '' })
 
   const filtered = useMemo(() => {
     return items.filter(item => {
-      if (filters.cliente && item.cliente !== filters.cliente) return false
-      if (filters.pedido && item.pedido !== filters.pedido) return false
+      if (filters.cliente  && item.cliente  !== filters.cliente)  return false
+      if (filters.pedido   && item.pedido   !== filters.pedido)   return false
+      if (filters.situacao && item.situacao !== filters.situacao) return false
+      if (filters.estado   && item.estado   !== filters.estado)   return false
       if (filters.search) {
         const q = filters.search.toLowerCase()
         return (
-          item.cliente.toLowerCase().includes(q) ||
-          item.produto.toLowerCase().includes(q) ||
-          item.pedido.includes(q) ||
-          item.codCliente.includes(q)
+          item.cliente.toLowerCase().includes(q)   ||
+          item.produto.toLowerCase().includes(q)   ||
+          item.pedido.includes(q)                  ||
+          item.codCliente.includes(q)              ||
+          item.municipio.toLowerCase().includes(q)
         )
       }
       return true
@@ -82,7 +85,7 @@ export default function Dashboard({ meta, items }: DashboardProps) {
           RCA {meta.id}
         </span>
         <span className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>
-          {meta.vendedor}
+          {meta.vendedor ?? meta.representada}
         </span>
       </div>
 

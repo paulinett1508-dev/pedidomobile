@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import VendorForm from './VendorForm'
-import { getRcaMeta } from '@/lib/data'
 
 interface Vendor {
   id: string
