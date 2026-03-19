@@ -14,6 +14,21 @@ interface PasswordSectionProps {
   onSubmit: (e: React.FormEvent) => void
 }
 
+function EyeIcon({ open }: { open: boolean }) {
+  return open ? (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+  ) : (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  )
+}
+
 function PasswordSection({
   title,
   info,
@@ -25,6 +40,9 @@ function PasswordSection({
   loading,
   onSubmit,
 }: PasswordSectionProps) {
+  const [show, setShow] = useState(false)
+  const [show2, setShow2] = useState(false)
+
   return (
     <form
       onSubmit={onSubmit}
@@ -40,38 +58,60 @@ function PasswordSection({
         <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>
           Nova senha
         </label>
-        <input
-          type="password"
-          value={pwd}
-          onChange={e => setPwd(e.target.value)}
-          required
-          minLength={6}
-          className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
-          style={{
-            background: 'var(--surface2)',
-            border: '1px solid var(--border)',
-            color: 'var(--text)',
-          }}
-        />
+        <div className="relative">
+          <input
+            type={show ? 'text' : 'password'}
+            value={pwd}
+            onChange={e => setPwd(e.target.value)}
+            required
+            minLength={6}
+            className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
+            style={{
+              background: 'var(--surface2)',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => setShow(s => !s)}
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            style={{ color: 'var(--muted)' }}
+            tabIndex={-1}
+          >
+            <EyeIcon open={show} />
+          </button>
+        </div>
       </div>
 
       <div>
         <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>
           Confirmar senha
         </label>
-        <input
-          type="password"
-          value={pwd2}
-          onChange={e => setPwd2(e.target.value)}
-          required
-          minLength={6}
-          className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
-          style={{
-            background: 'var(--surface2)',
-            border: '1px solid var(--border)',
-            color: 'var(--text)',
-          }}
-        />
+        <div className="relative">
+          <input
+            type={show2 ? 'text' : 'password'}
+            value={pwd2}
+            onChange={e => setPwd2(e.target.value)}
+            required
+            minLength={6}
+            className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
+            style={{
+              background: 'var(--surface2)',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => setShow2(s => !s)}
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            style={{ color: 'var(--muted)' }}
+            tabIndex={-1}
+          >
+            <EyeIcon open={show2} />
+          </button>
+        </div>
       </div>
 
       {msg && (
