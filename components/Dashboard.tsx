@@ -47,14 +47,16 @@ export default function Dashboard({ meta, items }: DashboardProps) {
         style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Logo size="sm" />
-            <div className="hidden md:block">
-              <p className="text-xs font-medium" style={{ color: 'var(--muted)' }}>
-                RCA {meta.id}
+          <div className="flex items-center gap-3">
+            <div className="bg-white rounded-md px-1.5 py-1 shrink-0">
+              <Logo size="sm" />
+            </div>
+            <div>
+              <p className="text-sm font-bold leading-tight" style={{ color: 'var(--accent)' }}>
+                Pedido Mobile
               </p>
-              <p className="text-sm font-semibold leading-tight" style={{ color: 'var(--text)' }}>
-                {meta.vendedor}
+              <p className="text-xs leading-tight" style={{ color: 'var(--muted)' }}>
+                Sistema de Consultas de Pedidos até 31/12/2025
               </p>
             </div>
           </div>
