@@ -34,14 +34,23 @@ export default function AdminOverview() {
 
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-4">
-        <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>Visão Geral</h2>
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>
-          {ids.length} representadas · {totalItens.toLocaleString('pt-BR')} itens · {totalPedidos.toLocaleString('pt-BR')} pedidos
+      {/* Section header */}
+      <div className="flex items-baseline justify-between mb-6">
+        <h2
+          className="text-xl"
+          style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+        >
+          Representadas
+        </h2>
+        <p
+          className="font-mono text-xs uppercase tracking-widest"
+          style={{ color: '#6B9E85', letterSpacing: '0.08em' }}
+        >
+          {ids.length} reps · {totalItens.toLocaleString('pt-BR')} itens · {totalPedidos.toLocaleString('pt-BR')} pedidos
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {ids.map(id => {
           const meta   = getRcaMeta(id)
           const counts = COUNTS[id]
@@ -50,30 +59,47 @@ export default function AdminOverview() {
             <div
               key={id}
               className="rounded-xl p-4 flex flex-col gap-3"
-              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+              style={{ background: '#111A14', border: '1px solid #1E2A23' }}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-start justify-between gap-2">
+                <p
+                  className="text-sm font-medium leading-snug"
+                  style={{ color: '#E8F3EE' }}
+                >
+                  {meta.representada}
+                </p>
                 <span
-                  className="font-mono text-xs px-2 py-1 rounded shrink-0 mt-0.5"
-                  style={{ background: 'var(--surface2)', color: 'var(--accent)' }}
+                  className="font-mono text-xs shrink-0 mt-0.5"
+                  style={{ color: '#6B9E85' }}
                 >
                   {id}
                 </span>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold leading-snug truncate" style={{ color: 'var(--text)' }}>
-                    {meta.representada}
-                  </p>
-                  {counts && (
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>
-                      {counts.itens.toLocaleString('pt-BR')} itens · {counts.pedidos.toLocaleString('pt-BR')} pedidos
-                    </p>
-                  )}
-                </div>
               </div>
+
+              {counts && (
+                <p className="font-mono text-xs" style={{ color: '#6B9E85' }}>
+                  {counts.itens.toLocaleString('pt-BR')} itens · {counts.pedidos.toLocaleString('pt-BR')} pedidos
+                </p>
+              )}
+
               <Link
                 href={`/admin/rca/${id}`}
-                className="block text-center py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
-                style={{ background: 'var(--accent)', color: '#fff' }}
+                className="block text-center py-2 rounded-lg text-xs font-medium transition-colors"
+                style={{
+                  border: '1px solid #1E2A23',
+                  color: '#6B9E85',
+                  background: 'transparent',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget
+                  el.style.borderColor = '#2ECC8A'
+                  el.style.color = '#2ECC8A'
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget
+                  el.style.borderColor = '#1E2A23'
+                  el.style.color = '#6B9E85'
+                }}
               >
                 Ver relatório
               </Link>

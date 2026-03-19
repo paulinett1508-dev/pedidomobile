@@ -16,12 +16,12 @@ interface PasswordSectionProps {
 
 function EyeIcon({ open }: { open: boolean }) {
   return open ? (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
   ) : (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
       <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
       <line x1="1" y1="1" x2="23" y2="23"/>
@@ -30,15 +30,7 @@ function EyeIcon({ open }: { open: boolean }) {
 }
 
 function PasswordSection({
-  title,
-  info,
-  pwd,
-  setPwd,
-  pwd2,
-  setPwd2,
-  msg,
-  loading,
-  onSubmit,
+  title, info, pwd, setPwd, pwd2, setPwd2, msg, loading, onSubmit,
 }: PasswordSectionProps) {
   const [show, setShow] = useState(false)
   const [show2, setShow2] = useState(false)
@@ -46,16 +38,16 @@ function PasswordSection({
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-xl p-5 flex flex-col gap-3"
-      style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+      className="rounded-xl p-5 flex flex-col gap-4"
+      style={{ background: '#111A14', border: '1px solid #1E2A23' }}
     >
       <div>
-        <h3 className="font-semibold mb-0.5" style={{ color: 'var(--text)' }}>{title}</h3>
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>{info}</p>
+        <h3 className="font-medium text-sm" style={{ color: '#E8F3EE' }}>{title}</h3>
+        <p className="text-xs font-mono mt-0.5" style={{ color: '#6B9E85' }}>{info}</p>
       </div>
 
       <div>
-        <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>
+        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
           Nova senha
         </label>
         <div className="relative">
@@ -67,16 +59,16 @@ function PasswordSection({
             minLength={6}
             className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
             style={{
-              background: 'var(--surface2)',
-              border: '1px solid var(--border)',
-              color: 'var(--text)',
+              background: '#0D1117',
+              border: '1px solid #1E2A23',
+              color: '#E8F3EE',
             }}
           />
           <button
             type="button"
             onClick={() => setShow(s => !s)}
-            className="absolute right-3 top-1/2 -translate-y-1/2"
-            style={{ color: 'var(--muted)' }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-100 opacity-50"
+            style={{ color: '#6B9E85' }}
             tabIndex={-1}
           >
             <EyeIcon open={show} />
@@ -85,7 +77,7 @@ function PasswordSection({
       </div>
 
       <div>
-        <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>
+        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
           Confirmar senha
         </label>
         <div className="relative">
@@ -97,16 +89,16 @@ function PasswordSection({
             minLength={6}
             className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
             style={{
-              background: 'var(--surface2)',
-              border: '1px solid var(--border)',
-              color: 'var(--text)',
+              background: '#0D1117',
+              border: '1px solid #1E2A23',
+              color: '#E8F3EE',
             }}
           />
           <button
             type="button"
             onClick={() => setShow2(s => !s)}
-            className="absolute right-3 top-1/2 -translate-y-1/2"
-            style={{ color: 'var(--muted)' }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-100 opacity-50"
+            style={{ color: '#6B9E85' }}
             tabIndex={-1}
           >
             <EyeIcon open={show2} />
@@ -115,16 +107,16 @@ function PasswordSection({
       </div>
 
       {msg && (
-        <p className="text-sm" style={{ color: msg.ok ? 'var(--accent)' : 'var(--danger)' }}>
-          {msg.text}
+        <p className="text-xs font-mono" style={{ color: msg.ok ? '#2ECC8A' : 'var(--danger)' }}>
+          {msg.ok ? '✓ ' : '✕ '}{msg.text}
         </p>
       )}
 
       <button
         type="submit"
         disabled={loading}
-        className="py-2.5 rounded-lg text-sm font-medium disabled:opacity-60 transition-opacity hover:opacity-80"
-        style={{ background: 'var(--accent)', color: '#fff' }}
+        className="py-2.5 rounded-lg text-sm font-medium disabled:opacity-50 transition-opacity hover:opacity-80"
+        style={{ border: '1px solid #1F5C3E', color: '#6B9E85', background: 'transparent' }}
       >
         {loading ? 'Salvando...' : 'Salvar senha'}
       </button>
@@ -201,12 +193,22 @@ export default function PasswordForm() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>Senhas</h2>
+    <div className="flex flex-col gap-6">
+      <div className="flex items-baseline justify-between">
+        <h2
+          className="text-xl"
+          style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+        >
+          Senhas
+        </h2>
+        <p className="text-xs font-mono uppercase tracking-widest" style={{ color: '#6B9E85' }}>
+          Acesso ao sistema
+        </p>
+      </div>
 
       <PasswordSection
         title="Senha dos Vendedores"
-        info="Altera a senha única usada por todos os vendedores."
+        info="Senha única compartilhada por todos os vendedores."
         pwd={vendorPwd}
         setPwd={setVendorPwd}
         pwd2={vendorPwd2}
@@ -218,7 +220,7 @@ export default function PasswordForm() {
 
       <PasswordSection
         title="Senha do Gerente"
-        info="Altera a senha de acesso ao painel administrativo."
+        info="Senha de acesso ao painel administrativo."
         pwd={adminPwd}
         setPwd={setAdminPwd}
         pwd2={adminPwd2}
