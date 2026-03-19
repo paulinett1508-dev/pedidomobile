@@ -6,6 +6,8 @@ interface PageProps {
   params: { id: string }
 }
 
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   return [
     '031','132','200','216','217','224','225','227',
