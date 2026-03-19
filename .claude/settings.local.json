@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes 2>&1)",
+      "Bash(mv CLAUDE.md CLAUDE.md.bak && mv README.md README.md.bak && npx create-next-app@14 . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes 2>&1; mv CLAUDE.md.bak CLAUDE.md && mv README.md.bak README.md)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"\nconst bcrypt = require\\('bcryptjs'\\);\n\\(async \\(\\) => {\n  const v = await bcrypt.hash\\('sobral2024', 12\\);\n  const a = await bcrypt.hash\\('admin2024', 12\\);\n  console.log\\(JSON.stringify\\({ v, a }\\)\\);\n}\\)\\(\\);\")",
+      "Bash(npm run:*)"
+    ]
+  }
+}

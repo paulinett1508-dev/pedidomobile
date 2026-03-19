@@ -1,0 +1,137 @@
+[
+  {
+    "pedido": "000484",
+    "codCliente": "06664",
+    "cliente": "GHC MED DISTRIBUIDORA LTDA",
+    "produto": "DOSEVIT – VITAMINA D 20 ML - CX C/120",
+    "qtde": 720,
+    "preco": 4.44,
+    "total": 3196.80
+  },
+  {
+    "pedido": "000484",
+    "codCliente": "06664",
+    "cliente": "GHC MED DISTRIBUIDORA LTDA",
+    "produto": "FERRO QUELATO 30 ML - CX C/100",
+    "qtde": 300,
+    "preco": 6.80,
+    "total": 2040.00
+  },
+  {
+    "pedido": "000485",
+    "codCliente": "07812",
+    "cliente": "FARMÁCIA SAÚDE E VIDA LTDA",
+    "produto": "DOSEVIT – VITAMINA D 20 ML - CX C/120",
+    "qtde": 240,
+    "preco": 4.44,
+    "total": 1065.60
+  },
+  {
+    "pedido": "000485",
+    "codCliente": "07812",
+    "cliente": "FARMÁCIA SAÚDE E VIDA LTDA",
+    "produto": "COMPLEXO B 30 ML - CX C/100",
+    "qtde": 200,
+    "preco": 5.50,
+    "total": 1100.00
+  },
+  {
+    "pedido": "000486",
+    "codCliente": "09234",
+    "cliente": "DROGARIA CENTRAL SOBRAL LTDA",
+    "produto": "DOSEVIT – VITAMINA D 20 ML - CX C/120",
+    "qtde": 480,
+    "preco": 4.44,
+    "total": 2131.20
+  },
+  {
+    "pedido": "000486",
+    "codCliente": "09234",
+    "cliente": "DROGARIA CENTRAL SOBRAL LTDA",
+    "produto": "VITAMINA C 500MG 30 COMP - CX C/60",
+    "qtde": 120,
+    "preco": 12.90,
+    "total": 1548.00
+  },
+  {
+    "pedido": "000487",
+    "codCliente": "10451",
+    "cliente": "MASTER FARMA DISTRIBUIDORA",
+    "produto": "FERRO QUELATO 30 ML - CX C/100",
+    "qtde": 500,
+    "preco": 6.80,
+    "total": 3400.00
+  },
+  {
+    "pedido": "000487",
+    "codCliente": "10451",
+    "cliente": "MASTER FARMA DISTRIBUIDORA",
+    "produto": "ÔMEGA 3 1000MG 60 CAPS - CX C/40",
+    "qtde": 80,
+    "preco": 18.50,
+    "total": 1480.00
+  },
+  {
+    "pedido": "000488",
+    "codCliente": "11023",
+    "cliente": "DROGALESTE DISTRIBUIDORA LTDA",
+    "produto": "DOSEVIT – VITAMINA D 20 ML - CX C/120",
+    "qtde": 360,
+    "preco": 4.44,
+    "total": 1598.40
+  },
+  {
+    "pedido": "000488",
+    "codCliente": "11023",
+    "cliente": "DROGALESTE DISTRIBUIDORA LTDA",
+    "produto": "COMPLEXO B 30 ML - CX C/100",
+    "qtde": 150,
+    "preco": 5.50,
+    "total": 825.00
+  },
+  {
+    "pedido": "000489",
+    "codCliente": "12345",
+    "cliente": "FARMÁCIA NOVA SAÚDE EIRELI",
+    "produto": "VITAMINA C 500MG 30 COMP - CX C/60",
+    "qtde": 60,
+    "preco": 12.90,
+    "total": 774.00
+  },
+  {
+    "pedido": "000489",
+    "codCliente": "12345",
+    "cliente": "FARMÁCIA NOVA SAÚDE EIRELI",
+    "produto": "ÔMEGA 3 1000MG 60 CAPS - CX C/40",
+    "qtde": 40,
+    "preco": 18.50,
+    "total": 740.00
+  },
+  {
+    "pedido": "000490",
+    "codCliente": "13567",
+    "cliente": "DISTRIBUIDORA FORTALEZA FARMA",
+    "produto": "FERRO QUELATO 30 ML - CX C/100",
+    "qtde": 400,
+    "preco": 6.80,
+    "total": 2720.00
+  },
+  {
+    "pedido": "000490",
+    "codCliente": "13567",
+    "cliente": "DISTRIBUIDORA FORTALEZA FARMA",
+    "produto": "DOSEVIT – VITAMINA D 20 ML - CX C/120",
+    "qtde": 600,
+    "preco": 4.44,
+    "total": 2664.00
+  },
+  {
+    "pedido": "000491",
+    "codCliente": "14890",
+    "cliente": "REDE ULTRA FARMA LTDA",
+    "produto": "COMPLEXO B 30 ML - CX C/100",
+    "qtde": 250,
+    "preco": 5.50,
+    "total": 1375.00
+  }
+]

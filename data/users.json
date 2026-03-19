@@ -1,0 +1,7 @@
+{
+  "vendorPasswordHash": "$2a$12$bY6ZDe8bbLozvYfSxtwztOdskjZMnQFDuf/hWVEW.PBdZvDX9wuaa",
+  "adminPasswordHash": "$2a$12$0OP5bFUr53QfXfvKy9bJNOaOsMqW1LqhsQ71P3xKgtCEqYqL5lkJe",
+  "vendors": [
+    { "id": "224", "nome": "Júlio Cesar Lima dos Santos" }
+  ]
+}
