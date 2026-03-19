@@ -15,14 +15,16 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ meta, items }: DashboardProps) {
-  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '' })
+  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
 
   const filtered = useMemo(() => {
     return items.filter(item => {
-      if (filters.cliente  && item.cliente  !== filters.cliente)  return false
-      if (filters.pedido   && item.pedido   !== filters.pedido)   return false
-      if (filters.situacao && item.situacao !== filters.situacao) return false
-      if (filters.estado   && item.estado   !== filters.estado)   return false
+      if (filters.cliente     && item.cliente     !== filters.cliente)     return false
+      if (filters.pedido      && item.pedido      !== filters.pedido)      return false
+      if (filters.situacao    && item.situacao    !== filters.situacao)    return false
+      if (filters.estado      && item.estado      !== filters.estado)      return false
+      if (filters.tabelaPreco && item.tabelaPreco !== filters.tabelaPreco) return false
+      if (filters.planoPagto  && item.planoPagto  !== filters.planoPagto)  return false
       if (filters.search) {
         const q = filters.search.toLowerCase()
         return (

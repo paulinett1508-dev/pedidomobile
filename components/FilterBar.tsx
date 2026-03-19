@@ -4,11 +4,13 @@ import { useState } from 'react'
 import type { PedidoItem } from '@/lib/types'
 
 export interface Filters {
-  search:   string
-  cliente:  string
-  pedido:   string
-  situacao: string
-  estado:   string
+  search:      string
+  cliente:     string
+  pedido:      string
+  situacao:    string
+  estado:      string
+  tabelaPreco: string
+  planoPagto:  string
 }
 
 interface FilterBarProps {
@@ -51,15 +53,17 @@ function SelectField({
 export default function FilterBar({ items, filters, onChange }: FilterBarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const clientes  = Array.from(new Set(items.map(i => i.cliente))).sort()
-  const pedidos   = Array.from(new Set(items.map(i => i.pedido))).sort((a, b) => Number(a) - Number(b))
-  const situacoes = Array.from(new Set(items.map(i => i.situacao).filter(Boolean))).sort()
-  const estados   = Array.from(new Set(items.map(i => i.estado).filter(Boolean))).sort()
+  const clientes    = Array.from(new Set(items.map(i => i.cliente))).sort()
+  const pedidos     = Array.from(new Set(items.map(i => i.pedido))).sort((a, b) => Number(a) - Number(b))
+  const situacoes   = Array.from(new Set(items.map(i => i.situacao).filter(Boolean))).sort()
+  const estados     = Array.from(new Set(items.map(i => i.estado).filter(Boolean))).sort()
+  const tabelas     = Array.from(new Set(items.map(i => i.tabelaPreco).filter(Boolean))).sort()
+  const planos      = Array.from(new Set(items.map(i => i.planoPagto).filter(Boolean))).sort()
 
-  const activeCount = [filters.cliente, filters.pedido, filters.situacao, filters.estado].filter(Boolean).length
+  const activeCount = [filters.cliente, filters.pedido, filters.situacao, filters.estado, filters.tabelaPreco, filters.planoPagto].filter(Boolean).length
 
   function clear() {
-    onChange({ search: '', cliente: '', pedido: '', situacao: '', estado: '' })
+    onChange({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
     setDrawerOpen(false)
   }
 
@@ -104,6 +108,32 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
         >
           <option value="">UF</option>
           {estados.map(s => <option key={s} value={s}>{s}</option>)}
+        </select>
+        <select
+          value={filters.tabelaPreco}
+          onChange={e => onChange({ ...filters, tabelaPreco: e.target.value })}
+          className="px-3 py-2 rounded-lg text-sm outline-none"
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            color: filters.tabelaPreco ? 'var(--text)' : 'var(--muted)',
+          }}
+        >
+          <option value="">Tabela de Preço</option>
+          {tabelas.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
+        <select
+          value={filters.planoPagto}
+          onChange={e => onChange({ ...filters, planoPagto: e.target.value })}
+          className="px-3 py-2 rounded-lg text-sm outline-none"
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            color: filters.planoPagto ? 'var(--text)' : 'var(--muted)',
+          }}
+        >
+          <option value="">Plano de Pagto.</option>
+          {planos.map(p => <option key={p} value={p}>{p}</option>)}
         </select>
         <select
           value={filters.cliente}
@@ -200,6 +230,10 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
               placeholder="Todas as situações" onChange={v => onChange({ ...filters, situacao: v })} />
             <SelectField label="Estado (UF)" value={filters.estado} options={estados}
               placeholder="Todos os estados" onChange={v => onChange({ ...filters, estado: v })} />
+            <SelectField label="Tabela de Preço" value={filters.tabelaPreco} options={tabelas}
+              placeholder="Todas as tabelas" onChange={v => onChange({ ...filters, tabelaPreco: v })} />
+            <SelectField label="Plano de Pagamento" value={filters.planoPagto} options={planos}
+              placeholder="Todos os planos" onChange={v => onChange({ ...filters, planoPagto: v })} />
             <SelectField label="Cliente" value={filters.cliente} options={clientes}
               placeholder="Todos os clientes" onChange={v => onChange({ ...filters, cliente: v })} />
             <SelectField label="Pedido" value={filters.pedido} options={pedidos.map(p => p)}

@@ -7,7 +7,7 @@ interface PedidosTableProps {
   items: PedidoItem[]
 }
 
-type SortKey = 'pedido' | 'data' | 'cliente' | 'municipio' | 'produto' | 'qtde' | 'preco' | 'total'
+type SortKey = 'pedido' | 'data' | 'cliente' | 'municipio' | 'produto' | 'qtde' | 'preco' | 'total' | 'tabelaPreco' | 'planoPagto'
 type SortDir = 'asc' | 'desc'
 
 function fmt(n: number) {
@@ -42,14 +42,16 @@ export default function PedidosTable({ items }: PedidosTableProps) {
   })
 
   const cols: { key: SortKey; label: string }[] = [
-    { key: 'pedido',    label: 'Pedido'    },
-    { key: 'data',      label: 'Data'      },
-    { key: 'cliente',   label: 'Cliente'   },
-    { key: 'municipio', label: 'Mun./UF'  },
-    { key: 'produto',   label: 'Produto'   },
-    { key: 'qtde',      label: 'Qtde'      },
-    { key: 'preco',     label: 'Preço'     },
-    { key: 'total',     label: 'Total'     },
+    { key: 'pedido',      label: 'Pedido'      },
+    { key: 'data',        label: 'Data'        },
+    { key: 'cliente',     label: 'Cliente'     },
+    { key: 'municipio',   label: 'Mun./UF'     },
+    { key: 'produto',     label: 'Produto'     },
+    { key: 'tabelaPreco', label: 'Tabela'      },
+    { key: 'planoPagto',  label: 'Plano Pagto' },
+    { key: 'qtde',        label: 'Qtde'        },
+    { key: 'preco',       label: 'Preço'       },
+    { key: 'total',       label: 'Total'       },
   ]
 
   function Arrow({ col }: { col: SortKey }) {
@@ -113,6 +115,12 @@ export default function PedidosTable({ items }: PedidosTableProps) {
                   <td className="px-3 py-2.5 max-w-52 truncate" style={{ color: 'var(--muted)' }} title={item.produto}>
                     {item.produto}
                   </td>
+                  <td className="px-3 py-2.5 whitespace-nowrap text-xs" style={{ color: 'var(--highlight)' }}>
+                    {item.tabelaPreco}
+                  </td>
+                  <td className="px-3 py-2.5 whitespace-nowrap text-xs" style={{ color: 'var(--muted)' }}>
+                    {item.planoPagto}
+                  </td>
                   <td className="px-3 py-2.5 text-right font-medium" style={{ color: 'var(--accent)' }}>
                     {item.qtde.toLocaleString('pt-BR')}
                   </td>
@@ -135,7 +143,7 @@ export default function PedidosTable({ items }: PedidosTableProps) {
             </tbody>
             <tfoot>
               <tr style={{ background: 'var(--surface2)', borderTop: '2px solid var(--border)' }}>
-                <td colSpan={5} className="px-3 py-2.5 text-xs font-medium" style={{ color: 'var(--muted)' }}>
+                <td colSpan={7} className="px-3 py-2.5 text-xs font-medium" style={{ color: 'var(--muted)' }}>
                   {items.length} itens · {new Set(items.map(i => i.pedido)).size} pedidos
                 </td>
                 <td className="px-3 py-2.5 text-right font-bold" style={{ color: 'var(--accent)' }}>
@@ -186,9 +194,17 @@ export default function PedidosTable({ items }: PedidosTableProps) {
             <p className="text-sm font-medium mb-0.5 truncate" style={{ color: 'var(--text)' }}>
               {item.cliente}
             </p>
-            <p className="text-xs mb-2 leading-snug" style={{ color: 'var(--muted)' }}>
+            <p className="text-xs mb-1 leading-snug" style={{ color: 'var(--muted)' }}>
               {item.produto}
             </p>
+            <div className="flex gap-3 text-xs mb-2">
+              {item.tabelaPreco && (
+                <span style={{ color: 'var(--highlight)' }}>{item.tabelaPreco}</span>
+              )}
+              {item.planoPagto && (
+                <span style={{ color: 'var(--muted)' }}>{item.planoPagto}</span>
+              )}
+            </div>
             <div className="flex gap-4 text-xs">
               <span style={{ color: 'var(--muted)' }}>
                 {item.municipio}{item.estado ? ` · ${item.estado}` : ''}
