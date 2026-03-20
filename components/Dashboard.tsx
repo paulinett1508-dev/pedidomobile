@@ -50,11 +50,15 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
       {/* Header */}
       <header
         className="sticky top-0 z-30 px-4 py-3"
-        style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}
+        style={{
+          background: 'var(--surface)',
+          borderBottom: '1px solid var(--border)',
+          boxShadow: '0 2px 0 0 rgba(184, 122, 10, 0.35)',
+        }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="bg-white rounded-md px-1.5 py-1 shrink-0">
+            <div className="rounded-md px-1.5 py-1 shrink-0" style={{ background: '#fff', outline: '2px solid rgba(184, 122, 10, 0.4)', outlineOffset: '1px' }}>
               <Logo size="sm" />
             </div>
             <div>

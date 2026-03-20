@@ -55,11 +55,11 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
       {/* Desktop Sidebar */}
       <aside
         className="hidden md:flex flex-col w-56 shrink-0 h-screen sticky top-0"
-        style={{ background: '#0D1117', borderRight: '1px solid #1E2A23' }}
+        style={{ background: '#0D1117', borderRight: '1px solid rgba(184, 122, 10, 0.25)' }}
       >
         {/* Logo */}
-        <div className="px-5 py-4 flex items-center gap-2.5" style={{ borderBottom: '1px solid #1E2A23' }}>
-          <div className="bg-white rounded px-1 py-0.5 shrink-0">
+        <div className="px-5 py-4 flex items-center gap-2.5" style={{ borderBottom: '2px solid rgba(184, 122, 10, 0.4)' }}>
+          <div className="rounded px-1 py-0.5 shrink-0" style={{ background: '#fff', outline: '2px solid rgba(184, 122, 10, 0.5)', outlineOffset: '1px' }}>
             <Logo size="sm" />
           </div>
           <div>
@@ -97,7 +97,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '1px solid #1E2A23' }}>
+        <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '2px solid rgba(184, 122, 10, 0.4)' }}>
           <ThemeToggle />
           <button
             onClick={handleLogout}

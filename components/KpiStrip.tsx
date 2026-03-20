@@ -44,7 +44,15 @@ export default function KpiStrip({ items, filtered }: KpiStripProps) {
           <div
             key={k.label}
             className="rounded-xl p-3 flex flex-col gap-1"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              borderLeft: (k as {amber?: boolean}).amber
+                ? '3px solid var(--amber)'
+                : k.accent
+                  ? '3px solid var(--accent)'
+                  : '3px solid var(--border)',
+            }}
           >
             <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>
               {k.label}
