@@ -3,17 +3,40 @@
 import { useState, useCallback } from 'react'
 import type { PedidoRow } from '@/app/api/admin/consulta/route'
 
-const RCA_IDS = [
-  '031','132','200','216','217','224','225','227','231','237',
-  '240','245','248','251','252','254','256','257','258','259','260',
+const RCAS: { id: string; nome: string }[] = [
+  { id: '031', nome: 'THEODORO F SOBRAL E CIA LTDA' },
+  { id: '132', nome: 'AVANTEPHARMA REPRESENTAÇÕES LTDA.' },
+  { id: '200', nome: 'CORDEIRO & FERREIRA LTDA - ME' },
+  { id: '216', nome: 'ACS SERVICOS E SOLUCOES FINANCEIRAS LTDA' },
+  { id: '217', nome: 'JACIARA RAMOS SANTOS' },
+  { id: '224', nome: 'JC LIMA REPRESENTAÇÕES LTDA' },
+  { id: '225', nome: 'PEDRA REPRESENTAÇOES LTDA' },
+  { id: '227', nome: 'PRIMAVERA REPRESENTAÇÃO EM MEDICAMENTOS LTDA' },
+  { id: '231', nome: 'DAVID JOSÉ DA ROCHA NORONHA ME' },
+  { id: '237', nome: 'L. REP DE MAT ODONTO-MEDICO-HOSPITALARES LTDA' },
+  { id: '240', nome: 'NELIO N DE SOUZA REPRESENTACOES EIRELI' },
+  { id: '245', nome: 'RAMACHI REPRESENTACOES LTDA' },
+  { id: '248', nome: 'JPA PROMOÇÕES DE VENDAS LTDA' },
+  { id: '251', nome: 'A CAETANO REPRESENTAÇOES ME' },
+  { id: '252', nome: 'JH REPRESENTACOES LTDA' },
+  { id: '254', nome: 'ALEX VANDO TARQUINIO DE ARAUJO - ME' },
+  { id: '256', nome: 'SC FARMA REPRESENTAÇÕES LTDA' },
+  { id: '257', nome: 'MARCILIO MENDES DE FREITAS JUNIOR' },
+  { id: '258', nome: 'AWFARMA REPRESENTAÇÕES LTDA' },
+  { id: '259', nome: 'EDIVALDO B RODRIGUES REPRESENTACOES' },
+  { id: '260', nome: 'LEONILDO PEREIRA BRANDAO REPRESENTACOES' },
 ]
 
-const SITUACOES = ['Faturado', 'Pendente', 'Cancelado']
+const SITUACOES = ['Cancelado', 'Em carteira', 'Em processamento', 'Enviado', 'Faturado', 'Recepcionado']
 
 const SIT_COLOR: Record<string, string> = {
-  Faturado:  'var(--accent)',
-  Pendente:  'var(--amber)',
-  Cancelado: 'var(--danger)',
+  Faturado:          'var(--accent)',
+  Cancelado:         'var(--danger)',
+  Pendente:          'var(--amber)',
+  'Em processamento': 'var(--amber)',
+  'Em carteira':      'var(--muted)',
+  Enviado:            'var(--highlight)',
+  Recepcionado:       'var(--highlight)',
 }
 
 function inputStyle(active: boolean) {
@@ -125,8 +148,8 @@ export default function ConsultasOperacionais() {
             style={inputStyle(!!rca)}
           >
             <option value="">Todas as representadas</option>
-            {RCA_IDS.map(id => (
-              <option key={id} value={id}>RCA {id}</option>
+            {RCAS.map(r => (
+              <option key={r.id} value={r.id}>{r.id} — {r.nome}</option>
             ))}
           </select>
 
