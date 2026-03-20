@@ -24,13 +24,11 @@ export async function getUsers(): Promise<UsersFile> {
     const { list } = await import('@vercel/blob')
     const { blobs } = await list({ prefix: BLOB_KEY })
     if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url, {
-        headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` },
-      })
+      const res = await fetch(blobs[0].url)
       return await res.json() as UsersFile
     }
-  } catch {
-    // blob not found yet — fall through to seed
+  } catch (err) {
+    console.error('[users] getUsers error:', err)
   }
 
   // First deploy: seed from the bundled users.json
@@ -43,13 +41,22 @@ export async function saveUsers(data: UsersFile): Promise<void> {
     return
   }
 
-  const { put } = await import('@vercel/blob')
+  const { put, list, del } = await import('@vercel/blob')
+
+  // Delete existing blob before re-uploading (blob doesn't overwrite by default)
+  try {
+    const { blobs } = await list({ prefix: BLOB_KEY })
+    if (blobs.length > 0) {
+      await del(blobs[0].url)
+    }
+  } catch (err) {
+    console.error('[users] del error (non-fatal):', err)
+  }
+
   await put(BLOB_KEY, JSON.stringify(data, null, 2), {
-    access: 'private',
+    access: 'public',
     addRandomSuffix: false,
-    allowOverwrite: true,
     contentType: 'application/json',
-    token: process.env.BLOB_READ_WRITE_TOKEN,
   })
 }
 

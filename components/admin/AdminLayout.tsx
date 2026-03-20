@@ -55,16 +55,16 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
       {/* Desktop Sidebar */}
       <aside
         className="hidden md:flex flex-col w-56 shrink-0 h-screen sticky top-0"
-        style={{ background: '#0D1117', borderRight: '1px solid rgba(184, 122, 10, 0.25)' }}
+        style={{ background: 'var(--surface)', borderRight: '1px solid var(--amber-subtle)' }}
       >
         {/* Logo */}
-        <div className="px-5 py-4 flex items-center gap-2.5" style={{ borderBottom: '2px solid rgba(184, 122, 10, 0.4)' }}>
-          <div className="rounded px-1 py-0.5 shrink-0" style={{ background: '#fff', outline: '2px solid rgba(184, 122, 10, 0.5)', outlineOffset: '1px' }}>
+        <div className="px-5 py-4 flex items-center gap-2.5" style={{ borderBottom: '2px solid var(--amber-outline)' }}>
+          <div className="rounded px-1 py-0.5 shrink-0" style={{ background: '#fff', outline: '2px solid var(--amber-outline)', outlineOffset: '1px' }}>
             <Logo size="sm" />
           </div>
           <div>
-            <p className="text-xs font-bold leading-tight" style={{ color: '#E6A020' }}>Pedido Mobile</p>
-            <p className="text-xs leading-tight" style={{ color: '#6B9E85' }}>Gerência</p>
+            <p className="text-xs font-bold leading-tight" style={{ color: 'var(--amber)' }}>Pedido Mobile</p>
+            <p className="text-xs leading-tight" style={{ color: 'var(--muted)' }}>Gerência</p>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5 overflow-y-auto">
           <p
             className="px-2 pb-2 text-xs font-mono uppercase tracking-widest"
-            style={{ color: 'rgba(230, 160, 32, 0.8)', letterSpacing: '0.1em' }}
+            style={{ color: 'var(--amber)', opacity: 0.8, letterSpacing: '0.1em' }}
           >
             Painel
           </p>
@@ -84,12 +84,12 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
                 onClick={() => onSectionChange(s.id)}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left relative"
                 style={{
-                  background: active ? 'rgba(46,204,138,0.06)' : 'transparent',
-                  color: active ? '#E8F3EE' : '#6B9E85',
-                  borderLeft: active ? '2px solid #2ECC8A' : '2px solid transparent',
+                  background: active ? 'var(--amber-glow)' : 'transparent',
+                  color: active ? 'var(--text)' : 'var(--muted)',
+                  borderLeft: active ? '2px solid var(--accent)' : '2px solid transparent',
                 }}
               >
-                <span style={{ color: active ? '#2ECC8A' : '#6B9E85', flexShrink: 0 }}>{s.icon}</span>
+                <span style={{ color: active ? 'var(--accent)' : 'var(--muted)', flexShrink: 0 }}>{s.icon}</span>
                 {s.label}
               </button>
             )
@@ -97,12 +97,12 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '2px solid rgba(184, 122, 10, 0.4)' }}>
+        <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '2px solid var(--amber-outline)' }}>
           <ThemeToggle />
           <button
             onClick={handleLogout}
             className="text-xs px-3 py-1.5 rounded-lg transition-opacity hover:opacity-70"
-            style={{ background: 'transparent', color: '#6B9E85', border: '1px solid #1E2A23' }}
+            style={{ background: 'transparent', color: 'var(--muted)', border: '1px solid var(--border)' }}
           >
             Sair
           </button>
@@ -114,20 +114,20 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         {/* Mobile header */}
         <header
           className="md:hidden sticky top-0 z-30 px-4 py-3 flex items-center justify-between"
-          style={{ background: '#0D1117', borderBottom: '1px solid #1E2A23' }}
+          style={{ background: 'var(--surface)', borderBottom: '2px solid var(--amber-outline)' }}
         >
           <div className="flex items-center gap-2">
-            <div className="bg-white rounded px-1 py-0.5">
+            <div className="rounded px-1 py-0.5" style={{ background: '#fff', outline: '2px solid var(--amber-outline)', outlineOffset: '1px' }}>
               <Logo size="sm" />
             </div>
-            <span className="text-xs font-bold" style={{ color: '#E8F3EE' }}>Gerência</span>
+            <span className="text-xs font-bold" style={{ color: 'var(--amber)' }}>Gerência</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <button
               onClick={handleLogout}
               className="text-xs px-3 py-1.5 rounded-lg"
-              style={{ color: '#6B9E85', border: '1px solid #1E2A23' }}
+              style={{ color: 'var(--muted)', border: '1px solid var(--border)' }}
             >
               Sair
             </button>
@@ -136,12 +136,12 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
 
         <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
           {children}
-          <footer className="mt-10 flex flex-col items-center gap-2 pb-6" style={{ borderTop: '1px solid #1E2A23', paddingTop: '1.5rem' }}>
+          <footer className="mt-10 flex flex-col items-center gap-2 pb-6" style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
             <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-16 opacity-70" />
-            <p className="text-xs text-center" style={{ color: '#6B9E85' }}>
+            <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>
               © {new Date().getFullYear()} Laboratório Sobral. Todos os direitos reservados.
             </p>
-            <p className="text-xs text-center" style={{ color: '#6B9E85', opacity: 0.6 }}>
+            <p className="text-xs text-center" style={{ color: 'var(--muted)', opacity: 0.6 }}>
               Sistema de consulta de pedidos — dados encerrados em 31/12/2025.
             </p>
           </footer>
@@ -151,7 +151,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
       {/* Mobile Bottom Nav */}
       <nav
         className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex"
-        style={{ background: '#0D1117', borderTop: '1px solid #1E2A23' }}
+        style={{ background: 'var(--surface)', borderTop: '2px solid var(--amber-outline)' }}
       >
         {sections.map(s => {
           const active = activeSection === s.id
@@ -160,7 +160,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
               key={s.id}
               onClick={() => onSectionChange(s.id)}
               className="flex-1 flex flex-col items-center py-2.5 gap-1 text-xs font-medium transition-colors"
-              style={{ color: active ? '#2ECC8A' : '#6B9E85' }}
+              style={{ color: active ? 'var(--accent)' : 'var(--muted)' }}
             >
               <span>{s.icon}</span>
               {s.label}

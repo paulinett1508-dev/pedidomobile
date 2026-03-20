@@ -13,6 +13,12 @@
   --muted: #5A7A6E;
   --amber: #B87A0A;
   --danger: #C0392B;
+  --amber-border:  rgba(184, 122, 10, 0.55);
+  --amber-outline: rgba(184, 122, 10, 0.40);
+  --amber-input:   rgba(184, 122, 10, 0.35);
+  --amber-subtle:  rgba(184, 122, 10, 0.25);
+  --amber-shadow:  rgba(184, 122, 10, 0.12);
+  --amber-glow:    rgba(184, 122, 10, 0.08);
 }
 
 .dark {
@@ -26,6 +32,12 @@
   --muted: #6B9E85;
   --amber: #E6A020;
   --danger: #F87171;
+  --amber-border:  rgba(230, 160, 32, 0.55);
+  --amber-outline: rgba(230, 160, 32, 0.40);
+  --amber-input:   rgba(230, 160, 32, 0.35);
+  --amber-subtle:  rgba(230, 160, 32, 0.25);
+  --amber-shadow:  rgba(230, 160, 32, 0.12);
+  --amber-glow:    rgba(230, 160, 32, 0.08);
 }
 
 body {

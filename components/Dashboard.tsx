@@ -53,7 +53,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         style={{
           background: 'var(--surface)',
           borderBottom: '1px solid var(--border)',
-          boxShadow: '0 2px 0 0 rgba(184, 122, 10, 0.35)',
+          boxShadow: '0 2px 0 0 var(--amber-input)',
         }}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">

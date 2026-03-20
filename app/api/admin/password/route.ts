@@ -24,7 +24,8 @@ export async function PATCH(request: Request) {
     await saveUsers(users)
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.error('[api/admin/password]', err)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
 }
