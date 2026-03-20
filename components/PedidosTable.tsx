@@ -109,6 +109,7 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
                       onClick={() => setSelectedPedido(item.pedido)}
                       className="font-mono font-medium underline-offset-2 hover:underline transition-opacity hover:opacity-80"
                       style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                      aria-label={`Ver detalhes do pedido ${item.pedido}`}
                     >
                       #{item.pedido}
                     </button>
@@ -188,6 +189,7 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
                   onClick={() => setSelectedPedido(item.pedido)}
                   className="font-mono font-semibold underline-offset-2 hover:underline"
                   style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                  aria-label={`Ver detalhes do pedido ${item.pedido}`}
                 >
                   #{item.pedido}
                 </button>
