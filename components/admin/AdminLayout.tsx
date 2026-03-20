@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Logo from '../Logo'
 import ThemeToggle from '../ThemeToggle'
 
@@ -68,9 +69,15 @@ const NAV_GROUPS = [
 const MOBILE_NAV = NAV_GROUPS.flatMap(g => g.items)
 
 export default function AdminLayout({ children, activeSection, onSectionChange }: AdminLayoutProps) {
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
+
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' })
     window.location.href = '/login'
+  }
+
+  function toggleGroup(label: string) {
+    setCollapsed(prev => ({ ...prev, [label]: !prev[label] }))
   }
 
   return (
@@ -93,36 +100,65 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 flex flex-col gap-4 overflow-y-auto">
-          {NAV_GROUPS.map(group => (
-            <div key={group.label}>
-              <p
-                className="px-2 pb-1.5 text-xs font-mono uppercase tracking-widest"
-                style={{ color: 'var(--amber)', opacity: 0.8, letterSpacing: '0.1em' }}
-              >
-                {group.label}
-              </p>
-              <div className="flex flex-col gap-0.5">
-                {group.items.map(s => {
-                  const active = activeSection === s.id
-                  return (
-                    <button
-                      key={s.id}
-                      onClick={() => onSectionChange(s.id)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left"
-                      style={{
-                        background: active ? 'var(--amber-glow)' : 'transparent',
-                        color: active ? 'var(--text)' : 'var(--muted)',
-                        borderLeft: active ? '2px solid var(--accent)' : '2px solid transparent',
-                      }}
-                    >
-                      <span style={{ color: active ? 'var(--accent)' : 'var(--muted)', flexShrink: 0 }}>{s.icon}</span>
-                      {s.label}
-                    </button>
-                  )
-                })}
+          {NAV_GROUPS.map(group => {
+            const isCollapsed = !!collapsed[group.label]
+            return (
+              <div key={group.label}>
+                <button
+                  onClick={() => toggleGroup(group.label)}
+                  className="w-full flex items-center justify-between px-2 pb-1.5 group"
+                >
+                  <p
+                    className="text-xs font-mono uppercase tracking-widest"
+                    style={{ color: 'var(--amber)', opacity: 0.8, letterSpacing: '0.1em' }}
+                  >
+                    {group.label}
+                  </p>
+                  <svg
+                    width="11" height="11" viewBox="0 0 24 24" fill="none"
+                    stroke="var(--amber)" strokeWidth="2.5"
+                    style={{
+                      opacity: 0.6,
+                      transform: isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.2s ease',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+
+                <div
+                  style={{
+                    overflow: 'hidden',
+                    maxHeight: isCollapsed ? '0px' : '200px',
+                    transition: 'max-height 0.25s ease',
+                  }}
+                >
+                  <div className="flex flex-col gap-0.5">
+                    {group.items.map(s => {
+                      const active = activeSection === s.id
+                      return (
+                        <button
+                          key={s.id}
+                          onClick={() => onSectionChange(s.id)}
+                          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left"
+                          style={{
+                            background: active ? 'var(--amber-glow)' : 'transparent',
+                            color: active ? 'var(--text)' : 'var(--muted)',
+                            borderLeft: active ? '2px solid var(--accent)' : '2px solid transparent',
+                          }}
+                        >
+                          <span style={{ color: active ? 'var(--accent)' : 'var(--muted)', flexShrink: 0 }}>{s.icon}</span>
+                          {s.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </nav>
 
         {/* Footer */}
