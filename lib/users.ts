@@ -26,9 +26,10 @@ export async function getUsers(): Promise<UsersFile> {
     const { list } = await import('@vercel/blob')
     const { blobs } = await list({ prefix: BLOB_PREFIX, token })
     if (blobs.length > 0) {
-      // sort by uploadedAt descending — get the most recent
       blobs.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime())
-      const res = await fetch(blobs[0].url)
+      const res = await fetch(blobs[0].url, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       if (res.ok) return await res.json() as UsersFile
     }
   } catch (err) {
@@ -60,7 +61,7 @@ export async function saveUsers(data: UsersFile): Promise<void> {
 
   // Put without addRandomSuffix restriction — Vercel appends a suffix automatically
   const result = await put(BLOB_PREFIX, JSON.stringify(data, null, 2), {
-    access: 'public',
+    access: 'private',
     contentType: 'application/json',
     token,
   })
