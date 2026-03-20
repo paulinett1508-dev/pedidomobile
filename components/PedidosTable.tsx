@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import type { PedidoItem } from '@/lib/types'
+import type { PedidoItem, RcaMeta } from '@/lib/types'
+import PedidoModal from './PedidoModal'
 
 interface PedidosTableProps {
   items: PedidoItem[]
+  allItems: PedidoItem[]
+  meta: RcaMeta
 }
 
 type SortKey = 'pedido' | 'data' | 'cliente' | 'municipio' | 'produto' | 'qtde' | 'preco' | 'total' | 'tabelaPreco' | 'planoPagto'
@@ -23,9 +26,10 @@ function situacaoBadge(s: string) {
   return map[s] ?? 'var(--muted)'
 }
 
-export default function PedidosTable({ items }: PedidosTableProps) {
+export default function PedidosTable({ items, allItems, meta }: PedidosTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>('pedido')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
+  const [selectedPedido, setSelectedPedido] = useState<string | null>(null)
 
   function handleSort(key: SortKey) {
     if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
@@ -100,8 +104,14 @@ export default function PedidosTable({ items }: PedidosTableProps) {
                     borderBottom: '1px solid var(--border)',
                   }}
                 >
-                  <td className="px-3 py-2.5 font-mono font-medium" style={{ color: 'var(--accent)' }}>
-                    #{item.pedido}
+                  <td className="px-3 py-2.5">
+                    <button
+                      onClick={() => setSelectedPedido(item.pedido)}
+                      className="font-mono font-medium underline-offset-2 hover:underline transition-opacity hover:opacity-80"
+                      style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                    >
+                      #{item.pedido}
+                    </button>
                   </td>
                   <td className="px-3 py-2.5 whitespace-nowrap font-mono text-xs" style={{ color: 'var(--muted)' }}>
                     {item.data}
@@ -174,9 +184,13 @@ export default function PedidosTable({ items }: PedidosTableProps) {
           >
             <div className="flex justify-between items-start mb-1">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-semibold" style={{ color: 'var(--accent)' }}>
+                <button
+                  onClick={() => setSelectedPedido(item.pedido)}
+                  className="font-mono font-semibold underline-offset-2 hover:underline"
+                  style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                >
                   #{item.pedido}
-                </span>
+                </button>
                 <span
                   className="text-xs px-1.5 py-0.5 rounded-full"
                   style={{ color: situacaoBadge(item.situacao), background: 'var(--surface2)' }}
@@ -220,6 +234,14 @@ export default function PedidosTable({ items }: PedidosTableProps) {
           </div>
         ))}
       </div>
+
+      {selectedPedido && (
+        <PedidoModal
+          items={allItems.filter(i => i.pedido === selectedPedido)}
+          meta={meta}
+          onClose={() => setSelectedPedido(null)}
+        />
+      )}
     </>
   )
 }
