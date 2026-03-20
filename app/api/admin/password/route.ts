@@ -25,7 +25,8 @@ export async function PATCH(request: Request) {
 
     return NextResponse.json({ ok: true })
   } catch (err) {
-    console.error('[api/admin/password]', err)
-    return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('[api/admin/password]', msg)
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
