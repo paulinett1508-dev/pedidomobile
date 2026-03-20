@@ -112,14 +112,16 @@ function PasswordSection({
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="py-2.5 rounded-lg text-sm font-medium disabled:opacity-50 transition-opacity hover:opacity-80"
-        style={{ background: 'var(--amber)', color: '#fff' }}
-      >
-        {loading ? 'Salvando...' : 'Salvar senha'}
-      </button>
+      <div className="flex justify-end">
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-4 py-2 rounded-lg text-xs font-medium disabled:opacity-50 transition-opacity hover:opacity-80"
+          style={{ border: '1px solid var(--amber)', color: 'var(--amber)', background: 'transparent' }}
+        >
+          {loading ? 'Salvando...' : 'Salvar senha'}
+        </button>
+      </div>
     </form>
   )
 }

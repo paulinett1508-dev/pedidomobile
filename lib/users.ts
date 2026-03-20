@@ -6,8 +6,11 @@ import type { UsersFile } from './types'
 const USERS_PATH = path.join(process.cwd(), 'data', 'users.json')
 const BLOB_KEY = 'users.json'
 
-function isProduction() {
-  return !!process.env.BLOB_READ_WRITE_TOKEN
+/** Finds any BLOB_READ_WRITE_TOKEN_* variant set by Vercel when connecting a store */
+function getBlobToken(): string | undefined {
+  if (process.env.BLOB_READ_WRITE_TOKEN) return process.env.BLOB_READ_WRITE_TOKEN
+  const key = Object.keys(process.env).find(k => k.startsWith('BLOB_READ_WRITE_TOKEN'))
+  return key ? process.env[key] : undefined
 }
 
 async function readLocalUsers(): Promise<UsersFile> {
@@ -16,38 +19,39 @@ async function readLocalUsers(): Promise<UsersFile> {
 }
 
 export async function getUsers(): Promise<UsersFile> {
-  if (!isProduction()) {
-    return readLocalUsers()
-  }
+  const token = getBlobToken()
+  if (!token) return readLocalUsers()
 
   try {
     const { list } = await import('@vercel/blob')
-    const { blobs } = await list({ prefix: BLOB_KEY })
+    const { blobs } = await list({ prefix: BLOB_KEY, token })
     if (blobs.length > 0) {
       const res = await fetch(blobs[0].url)
-      return await res.json() as UsersFile
+      if (res.ok) return await res.json() as UsersFile
     }
   } catch (err) {
     console.error('[users] getUsers error:', err)
   }
 
-  // First deploy: seed from the bundled users.json
   return readLocalUsers()
 }
 
 export async function saveUsers(data: UsersFile): Promise<void> {
-  if (!isProduction()) {
+  const token = getBlobToken()
+
+  if (!token) {
+    // Local dev — write to file directly
     await fs.writeFile(USERS_PATH, JSON.stringify(data, null, 2), 'utf-8')
     return
   }
 
   const { put, list, del } = await import('@vercel/blob')
 
-  // Delete existing blob before re-uploading (blob doesn't overwrite by default)
+  // Remove existing blob before re-uploading
   try {
-    const { blobs } = await list({ prefix: BLOB_KEY })
+    const { blobs } = await list({ prefix: BLOB_KEY, token })
     if (blobs.length > 0) {
-      await del(blobs[0].url)
+      await del(blobs.map(b => b.url), { token })
     }
   } catch (err) {
     console.error('[users] del error (non-fatal):', err)
@@ -57,6 +61,7 @@ export async function saveUsers(data: UsersFile): Promise<void> {
     access: 'public',
     addRandomSuffix: false,
     contentType: 'application/json',
+    token,
   })
 }
 
