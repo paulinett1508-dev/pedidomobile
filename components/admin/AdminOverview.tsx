@@ -31,11 +31,12 @@ const COUNTS: Record<string, { itens: number; pedidos: number }> = {
 type SortKey = 'matricula' | 'nome' | 'pedidos' | 'itens'
 type SortDir = 'asc' | 'desc'
 
-const SITUACAO = [
-  { label: 'Faturado',  pct: 68, color: 'var(--accent)' },
-  { label: 'Pendente',  pct: 22, color: 'var(--amber)'  },
-  { label: 'Cancelado', pct: 10, color: 'var(--danger)' },
-]
+export interface SituacaoStat {
+  label: string
+  count: number
+  pct: number
+  color: string
+}
 
 function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
   return (
@@ -56,7 +57,7 @@ function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
   )
 }
 
-export default function AdminOverview() {
+export default function AdminOverview({ situacao }: { situacao: SituacaoStat[] }) {
   const [search,  setSearch]  = useState('')
   const [sortBy,  setSortBy]  = useState<SortKey>('pedidos')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
@@ -178,11 +179,13 @@ export default function AdminOverview() {
             Situação dos Pedidos
           </div>
           <div className="flex flex-col gap-2 flex-1 justify-center">
-            {SITUACAO.map(s => (
+            {situacao.map(s => (
               <div key={s.label}>
                 <div className="flex justify-between mb-1">
                   <span className="text-xs" style={{ color: 'var(--text)' }}>{s.label}</span>
-                  <span className="text-xs font-bold" style={{ color: s.color }}>{s.pct}%</span>
+                  <span className="text-xs font-bold" style={{ color: s.color }}>
+                    {s.count.toLocaleString('pt-BR')} <span style={{ opacity: 0.7 }}>({s.pct}%)</span>
+                  </span>
                 </div>
                 <div className="h-1.5 rounded-full" style={{ background: 'var(--bg)' }}>
                   <div className="h-1.5 rounded-full" style={{ width: `${s.pct}%`, background: s.color }} />
