@@ -142,7 +142,7 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             className="w-full py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-60 hover:opacity-90"
-            style={{ background: 'var(--accent)', color: '#fff' }}
+            style={{ background: 'var(--amber)', color: '#fff' }}
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </button>

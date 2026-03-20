@@ -29,7 +29,7 @@ function TopList({
       className="rounded-xl p-4"
       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
-      <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--highlight)' }}>
+      <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--amber)' }}>
         {title}
       </h3>
       <div className="flex flex-col gap-2">

@@ -79,7 +79,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="flex-1 min-w-52 px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.search ? 'var(--amber)' : 'var(--border)'}`,
             color: 'var(--text)',
           }}
         />
@@ -89,7 +89,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.situacao ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.situacao ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -102,7 +102,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.estado ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.estado ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -115,7 +115,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.tabelaPreco ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.tabelaPreco ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -128,7 +128,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.planoPagto ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.planoPagto ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -141,7 +141,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none max-w-56"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.cliente ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.cliente ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -154,7 +154,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           className="px-3 py-2 rounded-lg text-sm outline-none"
           style={{
             background: 'var(--surface)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${filters.pedido ? 'var(--amber)' : 'var(--border)'}`,
             color: filters.pedido ? 'var(--text)' : 'var(--muted)',
           }}
         >
@@ -190,7 +190,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
           onClick={() => setDrawerOpen(true)}
           className="px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1 whitespace-nowrap shrink-0"
           style={{
-            background: activeCount > 0 ? 'var(--accent)' : 'var(--surface)',
+            background: activeCount > 0 ? 'var(--amber)' : 'var(--surface)',
             border: '1px solid var(--border)',
             color: activeCount > 0 ? '#fff' : 'var(--text)',
           }}
@@ -250,7 +250,7 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="flex-1 py-2.5 rounded-lg text-sm font-medium"
-                style={{ background: 'var(--accent)', color: '#fff' }}
+                style={{ background: 'var(--amber)', color: '#fff' }}
               >
                 Aplicar
               </button>

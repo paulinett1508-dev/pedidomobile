@@ -63,7 +63,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
             <Logo size="sm" />
           </div>
           <div>
-            <p className="text-xs font-bold leading-tight" style={{ color: '#E8F3EE' }}>Pedido Mobile</p>
+            <p className="text-xs font-bold leading-tight" style={{ color: '#E6A020' }}>Pedido Mobile</p>
             <p className="text-xs leading-tight" style={{ color: '#6B9E85' }}>Gerência</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5 overflow-y-auto">
           <p
             className="px-2 pb-2 text-xs font-mono uppercase tracking-widest"
-            style={{ color: '#6B9E85', letterSpacing: '0.1em' }}
+            style={{ color: 'rgba(230, 160, 32, 0.8)', letterSpacing: '0.1em' }}
           >
             Painel
           </p>

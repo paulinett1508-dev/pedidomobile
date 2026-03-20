@@ -62,7 +62,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
               <Logo size="sm" />
             </div>
             <div>
-              <p className="text-sm font-bold leading-tight" style={{ color: 'var(--accent)' }}>
+              <p className="text-sm font-bold leading-tight" style={{ color: 'var(--amber)' }}>
                 Pedido Mobile
               </p>
               <p className="text-xs leading-tight" style={{ color: 'var(--muted)' }}>
@@ -106,7 +106,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         className="md:hidden px-4 py-2 flex items-center gap-2"
         style={{ background: 'var(--surface2)', borderBottom: '1px solid var(--border)' }}
       >
-        <span className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: 'var(--accent)', color: '#fff' }}>
+        <span className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: 'var(--amber)', color: '#fff' }}>
           RCA {meta.id}
         </span>
         <span className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>
