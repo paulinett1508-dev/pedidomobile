@@ -148,12 +148,15 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="flex justify-center pt-1">
+        <div className="flex flex-col items-center gap-1.5 pt-2">
           <img
             src="/logo_sobral.svg"
             alt="Laboratório Sobral"
-            className="h-7 opacity-50"
+            className="h-14 opacity-75"
           />
+          <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>
+            © {new Date().getFullYear()} Laboratório Sobral. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </div>

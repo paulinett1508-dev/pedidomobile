@@ -139,8 +139,14 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         <FilterBar items={items} filters={filters} onChange={setFilters} />
         <PedidosTable items={filtered} />
 
-        <footer className="mt-10 flex justify-center pb-4 opacity-40">
-          <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-8" />
+        <footer className="mt-10 flex flex-col items-center gap-2 pb-6" style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+          <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-16 opacity-70" />
+          <p className="text-xs text-center" style={{ color: 'var(--muted)' }}>
+            © {new Date().getFullYear()} Laboratório Sobral. Todos os direitos reservados.
+          </p>
+          <p className="text-xs text-center" style={{ color: 'var(--muted)', opacity: 0.6 }}>
+            Sistema de consulta de pedidos — dados encerrados em 31/12/2025.
+          </p>
         </footer>
       </main>
     </div>
