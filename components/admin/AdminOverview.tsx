@@ -272,13 +272,15 @@ export default function AdminOverview() {
               className="border-b"
               style={{ borderColor: 'var(--border)', background: rank % 2 === 0 ? 'var(--surface)' : undefined }}
             >
-              {/* Desktop row */}
-              <div
-                className="hidden md:grid items-center px-4"
+              {/* Desktop row — entire row is clickable */}
+              <Link
+                href={`/admin/rca/${r.id}`}
+                className="hidden md:grid items-center px-4 group transition-colors"
                 style={{
-                  gridTemplateColumns: '28px 1fr 80px 80px 110px',
+                  gridTemplateColumns: '28px 1fr 80px 80px 28px',
                   padding: isTop3 ? '7px 16px' : '5px 16px',
                   fontSize: isTop3 ? '10px' : '9px',
+                  cursor: 'pointer',
                 }}
               >
                 <span
@@ -292,7 +294,10 @@ export default function AdminOverview() {
                 </span>
 
                 <div>
-                  <div style={{ color: isTop3 ? 'var(--text)' : 'var(--muted)', fontWeight: isTop3 ? 600 : 400 }}>
+                  <div
+                    className="group-hover:underline"
+                    style={{ color: isTop3 ? 'var(--text)' : 'var(--muted)', fontWeight: isTop3 ? 600 : 400 }}
+                  >
                     {r.id} · {r.meta.representada}
                   </div>
                   {isTop3 && (
@@ -311,19 +316,12 @@ export default function AdminOverview() {
                 <span className="text-right" style={{ color: 'var(--muted)' }}>
                   {r.counts.itens.toLocaleString('pt-BR')}
                 </span>
-                <span className="text-right">
-                  <Link
-                    href={`/admin/rca/${r.id}`}
-                    className="text-xs rounded-full px-3 py-1 transition-colors"
-                    style={{ border: '1px solid var(--border)', color: 'var(--accent)' }}
-                  >
-                    {isTop3 ? 'Ver pedidos →' : 'Ver →'}
-                  </Link>
-                </span>
-              </div>
+                <span className="text-right" style={{ color: 'var(--accent)', opacity: 0.6 }}>→</span>
+              </Link>
 
-              {/* Mobile card */}
-              <div
+              {/* Mobile card — entire card is clickable */}
+              <Link
+                href={`/admin/rca/${r.id}`}
                 className="flex md:hidden items-center justify-between px-4 py-3 gap-3"
                 style={{ borderLeft: isTop3 ? '3px solid var(--accent)' : undefined }}
               >
@@ -344,14 +342,8 @@ export default function AdminOverview() {
                     </p>
                   </div>
                 </div>
-                <Link
-                  href={`/admin/rca/${r.id}`}
-                  className="text-xs rounded-full px-3 py-1 shrink-0"
-                  style={{ border: '1px solid var(--border)', color: 'var(--accent)' }}
-                >
-                  Ver →
-                </Link>
-              </div>
+                <span className="text-xs shrink-0" style={{ color: 'var(--accent)' }}>→</span>
+              </Link>
             </div>
           )
         })}
