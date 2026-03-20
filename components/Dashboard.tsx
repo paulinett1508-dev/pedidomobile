@@ -138,6 +138,10 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         <MiniCharts items={filtered} />
         <FilterBar items={items} filters={filters} onChange={setFilters} />
         <PedidosTable items={filtered} />
+
+        <footer className="mt-10 flex justify-center pb-4 opacity-40">
+          <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-8" />
+        </footer>
       </main>
     </div>
   )

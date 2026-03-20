@@ -136,6 +136,9 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
 
         <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
           {children}
+          <footer className="mt-10 flex justify-center pb-4 opacity-40">
+            <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-8" />
+          </footer>
         </main>
       </div>
 

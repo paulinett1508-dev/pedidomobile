@@ -150,8 +150,8 @@ export default function LoginPage() {
 
         <div className="flex justify-center pt-1">
           <img
-            src="/logo.svg"
-            alt="Pedido Mobile"
+            src="/logo_sobral.svg"
+            alt="Laboratório Sobral"
             className="h-7 opacity-50"
           />
         </div>
