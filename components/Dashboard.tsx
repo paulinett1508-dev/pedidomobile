@@ -13,9 +13,10 @@ interface DashboardProps {
   meta: RcaMeta
   items: PedidoItem[]
   isAdmin?: boolean
+  children?: React.ReactNode
 }
 
-export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
+export default function Dashboard({ meta, items, isAdmin, children }: DashboardProps) {
   const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
 
   const filtered = useMemo(() => {
@@ -93,6 +94,28 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         </div>
       </header>
 
+      {/* Faixa de aviso — full width, logo abaixo do header */}
+      <div
+        className="w-full px-4 py-2.5 flex items-center gap-3 text-xs"
+        style={{
+          background: 'var(--amber-glow)',
+          borderBottom: '1px solid var(--amber-border)',
+          color: 'var(--text)',
+        }}
+      >
+        <span className="shrink-0" style={{ color: 'var(--amber)' }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </span>
+        <p>
+          <strong style={{ color: 'var(--amber)' }}>Sistema apenas para consultas.</strong>{' '}
+          Não vale para inserção de pedidos ou alterações. Dados encerrados em 31/12/2025.
+        </p>
+      </div>
+
       {/* Mobile vendor info sub-header */}
       <div
         className="md:hidden px-4 py-2 flex items-center gap-2"
@@ -108,27 +131,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
 
       {/* Content */}
       <main className="px-4 py-6">
-        {/* Aviso de sistema somente leitura */}
-        <div
-          className="flex gap-3 rounded-xl px-4 py-3 mb-5 text-sm leading-snug"
-          style={{
-            background: 'var(--surface2)',
-            border: '1px solid var(--amber)',
-            color: 'var(--text)',
-          }}
-        >
-          <span className="mt-0.5 shrink-0" style={{ color: 'var(--amber)' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-              <line x1="12" y1="9" x2="12" y2="13"/>
-              <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>
-          </span>
-          <p>
-            <strong style={{ color: 'var(--amber)' }}>Sistema apenas para consultas.</strong>{' '}
-            Não vale para inserção de pedidos ou alterações pertinentes. Todos os pedidos listados são herdados do sistema anterior, encerrado em 31/12/2025. Caso necessite, solicite uma auditoria com a gerência comercial do Laboratório Sobral.
-          </p>
-        </div>
+        {children}
 
         <KpiStrip items={items} filtered={filtered} />
         <MiniCharts items={filtered} />

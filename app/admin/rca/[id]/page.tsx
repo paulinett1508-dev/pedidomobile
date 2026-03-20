@@ -17,9 +17,8 @@ export default async function AdminRcaPage({ params }: PageProps) {
   if (!items) notFound()
 
   return (
-    <>
+    <Dashboard meta={meta} items={items} isAdmin>
       <RcaSummaryHeader meta={meta} items={items} />
-      <Dashboard meta={meta} items={items} isAdmin />
-    </>
+    </Dashboard>
   )
 }
