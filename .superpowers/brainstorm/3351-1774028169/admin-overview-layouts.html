@@ -1,0 +1,210 @@
+<h2>Visão Geral — Admin Dashboard</h2>
+<p class="subtitle">Qual layout faz mais sentido para um dashboard comercial de representadas?</p>
+
+<div class="cards">
+
+  <!-- OPÇÃO A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f1a14;padding:16px;font-family:monospace;">
+      <!-- KPI strip -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+        <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;">
+          <div style="font-size:9px;color:#6b9e85;text-transform:uppercase;letter-spacing:1px;">Representadas</div>
+          <div style="font-size:18px;font-weight:700;color:#2ecc8a;">21</div>
+        </div>
+        <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;">
+          <div style="font-size:9px;color:#6b9e85;text-transform:uppercase;letter-spacing:1px;">Pedidos</div>
+          <div style="font-size:18px;font-weight:700;color:#2ecc8a;">6.054</div>
+        </div>
+        <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;">
+          <div style="font-size:9px;color:#6b9e85;text-transform:uppercase;letter-spacing:1px;">Itens</div>
+          <div style="font-size:18px;font-weight:700;color:#2ecc8a;">37.583</div>
+        </div>
+        <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;">
+          <div style="font-size:9px;color:#6b9e85;text-transform:uppercase;letter-spacing:1px;">Valor Total</div>
+          <div style="font-size:16px;font-weight:700;color:#e6a020;">R$ 4,2M</div>
+        </div>
+      </div>
+      <!-- Table -->
+      <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr 80px;padding:7px 10px;background:#0f2a1a;font-size:8px;color:#7effd4;text-transform:uppercase;letter-spacing:0.5px;">
+          <span>Representada</span><span style="text-align:right">Pedidos</span><span style="text-align:right">Itens</span><span style="text-align:right">Performance</span><span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr 80px;padding:6px 10px;font-size:8px;border-top:1px solid #1f5c3e;align-items:center;">
+          <span style="color:#e8f3ee;">200 · SOBRALVIT</span>
+          <span style="text-align:right;color:#6b9e85;">1.330</span>
+          <span style="text-align:right;color:#6b9e85;">8.623</span>
+          <span style="text-align:right;"><div style="height:5px;background:#0f2a1a;border-radius:2px;"><div style="width:100%;height:5px;background:#2ecc8a;border-radius:2px;"></div></div></span>
+          <span style="text-align:right;font-size:7px;color:#2ecc8a;background:#0f2a1a;padding:2px 6px;border-radius:9px;">↗ Ver</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr 80px;padding:6px 10px;font-size:8px;border-top:1px solid #1f5c3e;align-items:center;background:rgba(255,255,255,0.02);">
+          <span style="color:#e8f3ee;">237 · ELFA</span>
+          <span style="text-align:right;color:#6b9e85;">1.014</span>
+          <span style="text-align:right;color:#6b9e85;">6.508</span>
+          <span style="text-align:right;"><div style="height:5px;background:#0f2a1a;border-radius:2px;"><div style="width:75%;height:5px;background:#2ecc8a;border-radius:2px;"></div></div></span>
+          <span style="text-align:right;font-size:7px;color:#2ecc8a;background:#0f2a1a;padding:2px 6px;border-radius:9px;">↗ Ver</span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr 80px;padding:6px 10px;font-size:8px;border-top:1px solid #1f5c3e;align-items:center;">
+          <span style="color:#e8f3ee;">031 · THEODORO</span>
+          <span style="text-align:right;color:#6b9e85;">565</span>
+          <span style="text-align:right;color:#6b9e85;">5.479</span>
+          <span style="text-align:right;"><div style="height:5px;background:#0f2a1a;border-radius:2px;"><div style="width:42%;height:5px;background:#2ecc8a;border-radius:2px;"></div></div></span>
+          <span style="text-align:right;font-size:7px;color:#2ecc8a;background:#0f2a1a;padding:2px 6px;border-radius:9px;">↗ Ver</span>
+        </div>
+        <div style="padding:5px 10px;font-size:7px;color:#6b9e85;border-top:1px solid #1f5c3e;text-align:center;">+ 18 representadas</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — KPIs + Tabela Ranqueada</h3>
+      <p>4 métricas no topo + tabela com barra de performance relativa. Foco em comparação entre representadas. Ordenável por pedidos, itens ou valor.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f1a14;padding:16px;font-family:monospace;">
+      <!-- 2 colunas: ranking + detalhes -->
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:10px;">
+        <!-- Coluna esq: top ranking -->
+        <div>
+          <div style="font-size:8px;color:#7effd4;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Top Representadas</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:6px;padding:7px 8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:8px;color:#e8f3ee;">200 · SOBRALVIT</span>
+                <span style="font-size:8px;color:#e6a020;font-weight:700;">1.330 ped.</span>
+              </div>
+              <div style="height:4px;background:#0a0f0d;border-radius:2px;"><div style="width:100%;height:4px;background:linear-gradient(90deg,#2ecc8a,#7effd4);border-radius:2px;"></div></div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:6px;padding:7px 8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:8px;color:#e8f3ee;">237 · ELFA</span>
+                <span style="font-size:8px;color:#e6a020;font-weight:700;">1.014 ped.</span>
+              </div>
+              <div style="height:4px;background:#0a0f0d;border-radius:2px;"><div style="width:76%;height:4px;background:linear-gradient(90deg,#2ecc8a,#7effd4);border-radius:2px;"></div></div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:6px;padding:7px 8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:8px;color:#e8f3ee;">257 · AVERT</span>
+                <span style="font-size:8px;color:#e6a020;font-weight:700;">608 ped.</span>
+              </div>
+              <div style="height:4px;background:#0a0f0d;border-radius:2px;"><div style="width:46%;height:4px;background:linear-gradient(90deg,#2ecc8a,#7effd4);border-radius:2px;"></div></div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:6px;padding:7px 8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:8px;color:#e8f3ee;">031 · THEODORO</span>
+                <span style="font-size:8px;color:#e6a020;font-weight:700;">565 ped.</span>
+              </div>
+              <div style="height:4px;background:#0a0f0d;border-radius:2px;"><div style="width:42%;height:4px;background:linear-gradient(90deg,#2ecc8a,#7effd4);border-radius:2px;"></div></div>
+            </div>
+            <div style="padding:4px 0;font-size:7px;color:#6b9e85;text-align:center;">+ 17 mais</div>
+          </div>
+        </div>
+        <!-- Coluna dir: resumo geral -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:8px;color:#7effd4;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Resumo Geral</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:#2ecc8a;">21</div>
+              <div style="font-size:7px;color:#6b9e85;margin-top:2px;">Representadas</div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:#2ecc8a;">6.054</div>
+              <div style="font-size:7px;color:#6b9e85;margin-top:2px;">Pedidos Totais</div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:10px;text-align:center;">
+              <div style="font-size:20px;font-weight:800;color:#2ecc8a;">37.583</div>
+              <div style="font-size:7px;color:#6b9e85;margin-top:2px;">Itens Totais</div>
+            </div>
+            <div style="background:#0f1f17;border:1px solid #e6a020;border-radius:8px;padding:10px;text-align:center;">
+              <div style="font-size:16px;font-weight:800;color:#e6a020;">R$ 4,2M</div>
+              <div style="font-size:7px;color:#6b9e85;margin-top:2px;">Valor Estimado</div>
+            </div>
+          </div>
+          <!-- acesso rápido -->
+          <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;padding:8px;margin-top:2px;">
+            <div style="font-size:7px;color:#7effd4;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Acesso Rápido</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span style="font-size:7px;background:#0a0f0d;border:1px solid #2ecc8a;color:#2ecc8a;padding:2px 7px;border-radius:9px;">031</span>
+              <span style="font-size:7px;background:#0a0f0d;border:1px solid #2ecc8a;color:#2ecc8a;padding:2px 7px;border-radius:9px;">200</span>
+              <span style="font-size:7px;background:#0a0f0d;border:1px solid #2ecc8a;color:#2ecc8a;padding:2px 7px;border-radius:9px;">237</span>
+              <span style="font-size:7px;background:#0a0f0d;border:1px solid #2ecc8a;color:#2ecc8a;padding:2px 7px;border-radius:9px;">257</span>
+              <span style="font-size:7px;background:#0a0f0d;border:1px solid #1f5c3e;color:#6b9e85;padding:2px 7px;border-radius:9px;">+ 17</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Ranking + Resumo Split</h3>
+      <p>Coluna esquerda com ranking visual por pedidos, coluna direita com KPIs globais + acesso rápido por ID. Layout estilo BI.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f1a14;padding:16px;font-family:monospace;">
+      <!-- KPI strip compacto -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;">
+        <div style="background:#0f1f17;border-left:3px solid #2ecc8a;border-radius:0 6px 6px 0;padding:8px 10px;">
+          <div style="font-size:16px;font-weight:800;color:#2ecc8a;">21</div>
+          <div style="font-size:7px;color:#6b9e85;">Representadas</div>
+        </div>
+        <div style="background:#0f1f17;border-left:3px solid #2ecc8a;border-radius:0 6px 6px 0;padding:8px 10px;">
+          <div style="font-size:16px;font-weight:800;color:#2ecc8a;">6.054</div>
+          <div style="font-size:7px;color:#6b9e85;">Pedidos</div>
+        </div>
+        <div style="background:#0f1f17;border-left:3px solid #2ecc8a;border-radius:0 6px 6px 0;padding:8px 10px;">
+          <div style="font-size:16px;font-weight:800;color:#2ecc8a;">37.583</div>
+          <div style="font-size:7px;color:#6b9e85;">Itens</div>
+        </div>
+        <div style="background:#0f1f17;border-left:3px solid #e6a020;border-radius:0 6px 6px 0;padding:8px 10px;">
+          <div style="font-size:14px;font-weight:800;color:#e6a020;">R$ 4,2M</div>
+          <div style="font-size:7px;color:#6b9e85;">Valor Total</div>
+        </div>
+      </div>
+      <!-- Dense table - full list -->
+      <div style="background:#0f1f17;border:1px solid #1f5c3e;border-radius:8px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:32px 2.5fr 70px 70px 90px;padding:6px 10px;background:#0f2a1a;font-size:7px;color:#7effd4;text-transform:uppercase;letter-spacing:0.5px;gap:4px;">
+          <span>#</span><span>Representada</span><span style="text-align:right">Pedidos</span><span style="text-align:right">Itens</span><span style="text-align:right">Ação</span>
+        </div>
+        <div style="display:grid;grid-template-columns:32px 2.5fr 70px 70px 90px;padding:5px 10px;font-size:8px;border-top:1px solid #1f5c3e;gap:4px;align-items:center;">
+          <span style="color:#2ecc8a;font-weight:700;">1</span>
+          <span style="color:#e8f3ee;">200 · SOBRALVIT</span>
+          <span style="text-align:right;color:#e6a020;font-weight:600;">1.330</span>
+          <span style="text-align:right;color:#6b9e85;">8.623</span>
+          <span style="text-align:right;"><span style="font-size:7px;color:#2ecc8a;background:#0a0f0d;border:1px solid #2ecc8a;padding:2px 8px;border-radius:9px;">Ver →</span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:32px 2.5fr 70px 70px 90px;padding:5px 10px;font-size:8px;border-top:1px solid #1f5c3e;gap:4px;align-items:center;background:rgba(255,255,255,0.015);">
+          <span style="color:#2ecc8a;font-weight:700;">2</span>
+          <span style="color:#e8f3ee;">237 · ELFA PHARM</span>
+          <span style="text-align:right;color:#e6a020;font-weight:600;">1.014</span>
+          <span style="text-align:right;color:#6b9e85;">6.508</span>
+          <span style="text-align:right;"><span style="font-size:7px;color:#2ecc8a;background:#0a0f0d;border:1px solid #2ecc8a;padding:2px 8px;border-radius:9px;">Ver →</span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:32px 2.5fr 70px 70px 90px;padding:5px 10px;font-size:8px;border-top:1px solid #1f5c3e;gap:4px;align-items:center;">
+          <span style="color:#2ecc8a;font-weight:700;">3</span>
+          <span style="color:#e8f3ee;">257 · AVERT</span>
+          <span style="text-align:right;color:#e6a020;font-weight:600;">608</span>
+          <span style="text-align:right;color:#6b9e85;">3.642</span>
+          <span style="text-align:right;"><span style="font-size:7px;color:#2ecc8a;background:#0a0f0d;border:1px solid #2ecc8a;padding:2px 8px;border-radius:9px;">Ver →</span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:32px 2.5fr 70px 70px 90px;padding:5px 10px;font-size:8px;border-top:1px solid #1f5c3e;gap:4px;align-items:center;background:rgba(255,255,255,0.015);">
+          <span style="color:#6b9e85;">4</span>
+          <span style="color:#e8f3ee;">031 · THEODORO</span>
+          <span style="text-align:right;color:#e6a020;font-weight:600;">565</span>
+          <span style="text-align:right;color:#6b9e85;">5.479</span>
+          <span style="text-align:right;"><span style="font-size:7px;color:#2ecc8a;background:#0a0f0d;border:1px solid #2ecc8a;padding:2px 8px;border-radius:9px;">Ver →</span></span>
+        </div>
+        <div style="padding:4px 10px;font-size:7px;color:#6b9e85;border-top:1px solid #1f5c3e;text-align:center;background:#0f2a1a;">todas as 21 representadas visíveis na lista completa</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — KPIs + Tabela Ranqueada Densa</h3>
+      <p>KPIs com borda lateral colorida (estilo moderno), tabela ranqueada com posição numerada. Mais compacto, todas as representadas visíveis sem scroll.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Clique para selecionar o layout preferido. Pode combinar elementos depois.</p>
