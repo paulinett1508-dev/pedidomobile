@@ -39,15 +39,15 @@ function PasswordSection({
     <form
       onSubmit={onSubmit}
       className="rounded-xl p-5 flex flex-col gap-4"
-      style={{ background: '#111A14', border: '1px solid #1E2A23' }}
+      style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
       <div>
-        <h3 className="font-medium text-sm" style={{ color: '#E8F3EE' }}>{title}</h3>
-        <p className="text-xs font-mono mt-0.5" style={{ color: '#6B9E85' }}>{info}</p>
+        <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>{title}</h3>
+        <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--muted)' }}>{info}</p>
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
+        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>
           Nova senha
         </label>
         <div className="relative">
@@ -59,16 +59,16 @@ function PasswordSection({
             minLength={6}
             className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
             style={{
-              background: '#0D1117',
-              border: '1px solid #1E2A23',
-              color: '#E8F3EE',
+              background: 'var(--surface2)',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
             }}
           />
           <button
             type="button"
             onClick={() => setShow(s => !s)}
             className="absolute right-3 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-100 opacity-50"
-            style={{ color: '#6B9E85' }}
+            style={{ color: 'var(--muted)' }}
             tabIndex={-1}
           >
             <EyeIcon open={show} />
@@ -77,7 +77,7 @@ function PasswordSection({
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
+        <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>
           Confirmar senha
         </label>
         <div className="relative">
@@ -89,16 +89,16 @@ function PasswordSection({
             minLength={6}
             className="w-full px-3 py-2.5 pr-10 rounded-lg text-sm outline-none"
             style={{
-              background: '#0D1117',
-              border: '1px solid #1E2A23',
-              color: '#E8F3EE',
+              background: 'var(--surface2)',
+              border: '1px solid var(--border)',
+              color: 'var(--text)',
             }}
           />
           <button
             type="button"
             onClick={() => setShow2(s => !s)}
             className="absolute right-3 top-1/2 -translate-y-1/2 transition-opacity hover:opacity-100 opacity-50"
-            style={{ color: '#6B9E85' }}
+            style={{ color: 'var(--muted)' }}
             tabIndex={-1}
           >
             <EyeIcon open={show2} />
@@ -107,7 +107,7 @@ function PasswordSection({
       </div>
 
       {msg && (
-        <p className="text-xs font-mono" style={{ color: msg.ok ? '#2ECC8A' : 'var(--danger)' }}>
+        <p className="text-xs font-mono" style={{ color: msg.ok ? 'var(--accent)' : 'var(--danger)' }}>
           {msg.ok ? '✓ ' : '✕ '}{msg.text}
         </p>
       )}
@@ -116,7 +116,7 @@ function PasswordSection({
         type="submit"
         disabled={loading}
         className="py-2.5 rounded-lg text-sm font-medium disabled:opacity-50 transition-opacity hover:opacity-80"
-        style={{ border: '1px solid #1F5C3E', color: '#6B9E85', background: 'transparent' }}
+        style={{ background: 'var(--amber)', color: '#fff' }}
       >
         {loading ? 'Salvando...' : 'Salvar senha'}
       </button>
@@ -197,11 +197,11 @@ export default function PasswordForm() {
       <div className="flex items-baseline justify-between">
         <h2
           className="text-xl"
-          style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+          style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
         >
           Senhas
         </h2>
-        <p className="text-xs font-mono uppercase tracking-widest" style={{ color: '#6B9E85' }}>
+        <p className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
           Acesso ao sistema
         </p>
       </div>

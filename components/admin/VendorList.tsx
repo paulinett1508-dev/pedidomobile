@@ -44,7 +44,7 @@ export default function VendorList() {
 
   if (loading) {
     return (
-      <div className="py-12 text-center font-mono text-xs uppercase tracking-widest" style={{ color: '#6B9E85' }}>
+      <div className="py-12 text-center font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
         Carregando...
       </div>
     )
@@ -52,25 +52,24 @@ export default function VendorList() {
 
   return (
     <div>
-      {/* Header */}
       <div className="flex items-baseline justify-between mb-6">
         <h2
           className="text-xl"
-          style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+          style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
         >
           Vendedores
         </h2>
         <button
           onClick={() => setShowForm(true)}
-          className="px-4 py-2 rounded-lg text-xs font-medium transition-colors"
-          style={{ background: '#2ECC8A', color: '#0A0F0D' }}
+          className="px-4 py-2 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
+          style={{ background: 'var(--accent)', color: 'var(--bg)' }}
         >
           + Novo Vendedor
         </button>
       </div>
 
       {vendors.length === 0 ? (
-        <p className="font-mono text-xs text-center py-12 uppercase tracking-widest" style={{ color: '#6B9E85' }}>
+        <p className="font-mono text-xs text-center py-12 uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
           Nenhum vendedor cadastrado
         </p>
       ) : (
@@ -79,41 +78,31 @@ export default function VendorList() {
             <div
               key={v.id}
               className="flex items-center justify-between px-4 py-3 rounded-xl gap-4"
-              style={{ background: '#111A14', border: '1px solid #1E2A23' }}
+              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
             >
               <div className="flex items-center gap-3 min-w-0">
                 <span
                   className="font-mono text-xs shrink-0"
-                  style={{ color: '#6B9E85' }}
+                  style={{ color: 'var(--muted)' }}
                 >
                   {v.id}
                 </span>
-                <span className="text-sm font-medium truncate" style={{ color: '#E8F3EE' }}>
+                <span className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>
                   {v.nome}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <Link
                   href={`/admin/rca/${v.id}`}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-                  style={{ border: '1px solid #1E2A23', color: '#6B9E85', background: 'transparent' }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget
-                    el.style.borderColor = '#2ECC8A'
-                    el.style.color = '#2ECC8A'
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget
-                    el.style.borderColor = '#1E2A23'
-                    el.style.color = '#6B9E85'
-                  }}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:[border-color:var(--accent)] hover:[color:var(--accent)]"
+                  style={{ border: '1px solid var(--border)', color: 'var(--muted)', background: 'transparent' }}
                 >
                   Ver relatório
                 </Link>
                 <button
                   onClick={() => setConfirmDelete(v.id)}
                   className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-70"
-                  style={{ border: '1px solid #3D1A1A', color: 'var(--danger)', background: 'transparent' }}
+                  style={{ border: '1px solid var(--danger)', color: 'var(--danger)', background: 'transparent', opacity: 0.7 }}
                 >
                   Remover
                 </button>
@@ -135,19 +124,19 @@ export default function VendorList() {
           <div className="absolute inset-0 bg-black/60" onClick={() => setConfirmDelete(null)} />
           <div
             className="relative w-full max-w-sm rounded-2xl p-6 flex flex-col gap-4"
-            style={{ background: '#111A14', border: '1px solid #1E2A23' }}
+            style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
           >
-            <h3 className="font-medium" style={{ color: '#E8F3EE' }}>Confirmar remoção</h3>
-            <p className="text-sm" style={{ color: '#6B9E85' }}>
+            <h3 className="font-medium" style={{ color: 'var(--text)' }}>Confirmar remoção</h3>
+            <p className="text-sm" style={{ color: 'var(--muted)' }}>
               Remover o vendedor de matrícula{' '}
-              <strong className="font-mono" style={{ color: '#E8F3EE' }}>{confirmDelete}</strong>?
+              <strong className="font-mono" style={{ color: 'var(--text)' }}>{confirmDelete}</strong>?
               {' '}Esta ação não pode ser desfeita.
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setConfirmDelete(null)}
                 className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-70"
-                style={{ border: '1px solid #1E2A23', color: '#6B9E85', background: 'transparent' }}
+                style={{ border: '1px solid var(--border)', color: 'var(--muted)', background: 'transparent' }}
               >
                 Cancelar
               </button>

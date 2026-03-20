@@ -34,17 +34,16 @@ export default function AdminOverview() {
 
   return (
     <div>
-      {/* Section header */}
       <div className="flex items-baseline justify-between mb-6">
         <h2
           className="text-xl"
-          style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+          style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
         >
           Representadas
         </h2>
         <p
           className="font-mono text-xs uppercase tracking-widest"
-          style={{ color: '#6B9E85', letterSpacing: '0.08em' }}
+          style={{ color: 'var(--muted)', letterSpacing: '0.08em' }}
         >
           {ids.length} reps · {totalItens.toLocaleString('pt-BR')} itens · {totalPedidos.toLocaleString('pt-BR')} pedidos
         </p>
@@ -59,46 +58,36 @@ export default function AdminOverview() {
             <div
               key={id}
               className="rounded-xl p-4 flex flex-col gap-3"
-              style={{ background: '#111A14', border: '1px solid #1E2A23' }}
+              style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
             >
               <div className="flex items-start justify-between gap-2">
                 <p
                   className="text-sm font-medium leading-snug"
-                  style={{ color: '#E8F3EE' }}
+                  style={{ color: 'var(--text)' }}
                 >
                   {meta.representada}
                 </p>
                 <span
                   className="font-mono text-xs shrink-0 mt-0.5"
-                  style={{ color: '#6B9E85' }}
+                  style={{ color: 'var(--muted)' }}
                 >
                   {id}
                 </span>
               </div>
 
               {counts && (
-                <p className="font-mono text-xs" style={{ color: '#6B9E85' }}>
+                <p className="font-mono text-xs" style={{ color: 'var(--muted)' }}>
                   {counts.itens.toLocaleString('pt-BR')} itens · {counts.pedidos.toLocaleString('pt-BR')} pedidos
                 </p>
               )}
 
               <Link
                 href={`/admin/rca/${id}`}
-                className="block text-center py-2 rounded-lg text-xs font-medium transition-colors"
+                className="block text-center py-2 rounded-lg text-xs font-medium transition-colors hover:[border-color:var(--accent)] hover:[color:var(--accent)]"
                 style={{
-                  border: '1px solid #1E2A23',
-                  color: '#6B9E85',
+                  border: '1px solid var(--border)',
+                  color: 'var(--muted)',
                   background: 'transparent',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget
-                  el.style.borderColor = '#2ECC8A'
-                  el.style.color = '#2ECC8A'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget
-                  el.style.borderColor = '#1E2A23'
-                  el.style.color = '#6B9E85'
                 }}
               >
                 Ver relatório

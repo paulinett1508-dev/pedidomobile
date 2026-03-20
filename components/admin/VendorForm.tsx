@@ -43,23 +43,23 @@ export default function VendorForm({ onSuccess, onCancel }: VendorFormProps) {
       <div className="absolute inset-0 bg-black/60" onClick={onCancel} />
       <div
         className="relative w-full max-w-md rounded-2xl p-6 flex flex-col gap-5"
-        style={{ background: '#111A14', border: '1px solid #1E2A23' }}
+        style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
       >
         <div>
           <h2
             className="text-lg"
-            style={{ color: '#E8F3EE', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
+            style={{ color: 'var(--text)', fontFamily: 'var(--font-serif)', fontWeight: 400 }}
           >
             Novo Vendedor
           </h2>
-          <p className="text-xs font-mono mt-0.5 uppercase tracking-widest" style={{ color: '#6B9E85' }}>
+          <p className="text-xs font-mono mt-0.5 uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
             Cadastro de representada
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
+            <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>
               Matrícula
             </label>
             <input
@@ -70,14 +70,14 @@ export default function VendorForm({ onSuccess, onCancel }: VendorFormProps) {
               required
               className="w-full px-3 py-2.5 rounded-lg text-sm outline-none font-mono"
               style={{
-                background: '#0D1117',
-                border: '1px solid #1E2A23',
-                color: '#E8F3EE',
+                background: 'var(--surface2)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
               }}
             />
           </div>
           <div>
-            <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: '#6B9E85' }}>
+            <label className="block text-xs font-mono uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>
               Razão Social
             </label>
             <input
@@ -88,9 +88,9 @@ export default function VendorForm({ onSuccess, onCancel }: VendorFormProps) {
               required
               className="w-full px-3 py-2.5 rounded-lg text-sm outline-none"
               style={{
-                background: '#0D1117',
-                border: '1px solid #1E2A23',
-                color: '#E8F3EE',
+                background: 'var(--surface2)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
               }}
             />
           </div>
@@ -104,7 +104,7 @@ export default function VendorForm({ onSuccess, onCancel }: VendorFormProps) {
               type="button"
               onClick={onCancel}
               className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-70"
-              style={{ border: '1px solid #1E2A23', color: '#6B9E85', background: 'transparent' }}
+              style={{ border: '1px solid var(--border)', color: 'var(--muted)', background: 'transparent' }}
             >
               Cancelar
             </button>
@@ -112,7 +112,7 @@ export default function VendorForm({ onSuccess, onCancel }: VendorFormProps) {
               type="submit"
               disabled={loading}
               className="flex-1 py-2.5 rounded-lg text-sm font-medium disabled:opacity-50 transition-opacity hover:opacity-80"
-              style={{ background: '#2ECC8A', color: '#0A0F0D' }}
+              style={{ background: 'var(--accent)', color: 'var(--bg)' }}
             >
               {loading ? 'Salvando...' : 'Salvar'}
             </button>
