@@ -56,7 +56,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
           boxShadow: '0 2px 0 0 var(--amber-input)',
         }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="rounded-md px-1.5 py-1 shrink-0" style={{ background: '#fff', outline: '2px solid rgba(184, 122, 10, 0.4)', outlineOffset: '1px' }}>
               <Logo size="sm" />
@@ -80,15 +80,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
               </span>
             )}
             <ThemeToggle />
-            {isAdmin ? (
-              <a
-                href="/admin"
-                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
-                style={{ background: 'var(--surface2)', color: 'var(--highlight)' }}
-              >
-                ← Voltar ao painel
-              </a>
-            ) : (
+            {!isAdmin && (
               <button
                 onClick={handleLogout}
                 className="px-3 py-1.5 rounded-lg text-xs font-medium transition-opacity hover:opacity-80"
@@ -115,7 +107,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
       </div>
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="px-4 py-6">
         {/* Aviso de sistema somente leitura */}
         <div
           className="flex gap-3 rounded-xl px-4 py-3 mb-5 text-sm leading-snug"

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { PedidoItem, RcaMeta } from '@/lib/types'
 
 interface Props {
@@ -62,10 +63,27 @@ export default function RcaSummaryHeader({ meta, items }: Props) {
       : `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
 
   return (
-    <div
-      className="rounded-xl mb-4 overflow-hidden"
-      style={{ border: '1px solid var(--border)' }}
-    >
+    <div className="mb-4">
+      {/* Botão Voltar */}
+      <Link
+        href="/admin"
+        className="inline-flex items-center gap-1.5 mb-3 text-xs font-medium rounded-lg px-3 py-1.5 transition-opacity hover:opacity-80"
+        style={{
+          background: 'var(--surface2)',
+          border: '1px solid var(--border)',
+          color: 'var(--highlight)',
+        }}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Voltar ao painel
+      </Link>
+
+      <div
+        className="rounded-xl overflow-hidden"
+        style={{ border: '1px solid var(--border)' }}
+      >
       {/* Cabeçalho da representada */}
       <div
         className="px-5 py-4 flex items-start justify-between gap-4"
@@ -98,14 +116,14 @@ export default function RcaSummaryHeader({ meta, items }: Props) {
       </div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0" style={{ '--tw-divide-opacity': 1, borderColor: 'var(--border)' } as React.CSSProperties}>
+      <div className="grid grid-cols-2 md:grid-cols-4" style={{ borderTop: '1px solid var(--border)' }}>
         {[
           { label: 'Pedidos',   value: pedidosUnicos.size.toLocaleString('pt-BR'),  color: 'var(--accent)' },
           { label: 'Clientes',  value: clientesUnicos.size.toLocaleString('pt-BR'), color: 'var(--accent)' },
           { label: 'Municípios', value: municipios.size.toLocaleString('pt-BR'),    color: 'var(--highlight)' },
           { label: 'Estados',   value: estados.size.toLocaleString('pt-BR'),        color: 'var(--highlight)' },
         ].map(s => (
-          <div key={s.label} className="px-4 py-3 flex flex-col gap-0.5" style={{ background: 'var(--surface)' }}>
+          <div key={s.label} className="px-4 py-3 flex flex-col gap-0.5" style={{ background: 'var(--surface)', borderRight: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
             <span className="text-xs" style={{ color: 'var(--muted)' }}>{s.label}</span>
             <span className="text-2xl font-black leading-none" style={{ color: s.color }}>{s.value}</span>
           </div>
@@ -113,10 +131,10 @@ export default function RcaSummaryHeader({ meta, items }: Props) {
       </div>
 
       {/* Situação + Top Produtos */}
-      <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x" style={{ borderTop: '1px solid var(--border)', borderColor: 'var(--border)' } as React.CSSProperties}>
+      <div className="grid md:grid-cols-2" style={{ borderTop: '1px solid var(--border)' }}>
 
         {/* Situação */}
-        <div className="px-4 py-3" style={{ background: 'var(--surface)' }}>
+        <div className="px-4 py-3" style={{ background: 'var(--surface)', borderRight: '1px solid var(--border)' }}>
           <p className="text-xs uppercase tracking-wider mb-2.5" style={{ color: 'var(--muted)' }}>Situação dos Pedidos</p>
           <div className="flex flex-col gap-2">
             {([
@@ -167,6 +185,7 @@ export default function RcaSummaryHeader({ meta, items }: Props) {
           </div>
         </div>
       </div>
+      </div>{/* rounded-xl card */}
     </div>
   )
 }
