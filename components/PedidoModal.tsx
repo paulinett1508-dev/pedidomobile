@@ -363,14 +363,6 @@ export default function PedidoModal({ items, meta, onClose }: PedidoModalProps) 
         </div>
       </div>
 
-      {/* Print CSS */}
-      <style>{`
-        @media print {
-          body * { visibility: hidden; }
-          [data-print-area], [data-print-area] * { visibility: visible; }
-          [data-print-area] { position: absolute; top: 0; left: 0; width: 100%; }
-        }
-      `}</style>
     </div>
   )
 }
