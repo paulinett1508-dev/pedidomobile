@@ -54,7 +54,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
     <div className="min-h-screen flex flex-col md:flex-row" style={{ background: 'var(--bg)' }}>
       {/* Desktop Sidebar */}
       <aside
-        className="hidden md:flex flex-col w-56 shrink-0 min-h-screen sticky top-0"
+        className="hidden md:flex flex-col w-56 shrink-0 h-screen sticky top-0"
         style={{ background: '#0D1117', borderRight: '1px solid #1E2A23' }}
       >
         {/* Logo */}
@@ -69,7 +69,7 @@ export default function AdminLayout({ children, activeSection, onSectionChange }
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5">
+        <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5 overflow-y-auto">
           <p
             className="px-2 pb-2 text-xs font-mono uppercase tracking-widest"
             style={{ color: '#6B9E85', letterSpacing: '0.1em' }}
