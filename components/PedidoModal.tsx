@@ -81,6 +81,9 @@ export default function PedidoModal({ items, meta, onClose }: PedidoModalProps) 
     >
       {/* Modal container */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Pedido ${header?.pedido}`}
         className="relative flex flex-col w-full h-full md:h-auto md:max-w-4xl md:rounded-2xl overflow-hidden"
         style={{ background: 'var(--surface)', maxHeight: '100dvh' }}
         onClick={(e) => e.stopPropagation()}
