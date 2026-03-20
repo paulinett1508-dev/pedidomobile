@@ -24,11 +24,13 @@ export async function getUsers(): Promise<UsersFile> {
     const { list } = await import('@vercel/blob')
     const { blobs } = await list({ prefix: BLOB_KEY })
     if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url)
+      const res = await fetch(blobs[0].url, {
+        headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` },
+      })
       return await res.json() as UsersFile
     }
   } catch {
-    // blob not found yet — fall through to local seed
+    // blob not found yet — fall through to seed
   }
 
   // First deploy: seed from the bundled users.json
@@ -43,10 +45,11 @@ export async function saveUsers(data: UsersFile): Promise<void> {
 
   const { put } = await import('@vercel/blob')
   await put(BLOB_KEY, JSON.stringify(data, null, 2), {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: 'application/json',
+    token: process.env.BLOB_READ_WRITE_TOKEN,
   })
 }
 
