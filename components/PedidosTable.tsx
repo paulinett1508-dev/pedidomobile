@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import type { PedidoItem, RcaMeta } from '@/lib/types'
 import PedidoModal from './PedidoModal'
 
@@ -10,7 +10,13 @@ interface PedidosTableProps {
   meta: RcaMeta
 }
 
-type SortKey = 'pedido' | 'data' | 'cliente' | 'municipio' | 'produto' | 'qtde' | 'preco' | 'total' | 'tabelaPreco' | 'planoPagto'
+interface PedidoGroup {
+  header: PedidoItem
+  qtdeTotal: number
+  totalItens: number
+}
+
+type SortKey = 'pedido' | 'data' | 'cliente' | 'municipio' | 'tabelaPreco' | 'planoPagto' | 'itens' | 'qtde' | 'total'
 type SortDir = 'asc' | 'desc'
 
 function fmt(n: number) {
@@ -36,12 +42,28 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
     else { setSortKey(key); setSortDir('asc') }
   }
 
-  const sorted = [...items].sort((a, b) => {
+  // Agrupa itens por pedido — 1 entrada por pedido distinto
+  const grouped = useMemo<PedidoGroup[]>(() => {
+    const map = new Map<string, PedidoGroup>()
+    for (const item of items) {
+      if (!map.has(item.pedido)) {
+        map.set(item.pedido, { header: item, qtdeTotal: 0, totalItens: 0 })
+      }
+      const g = map.get(item.pedido)!
+      g.qtdeTotal += item.qtde
+      g.totalItens += 1
+    }
+    return Array.from(map.values())
+  }, [items])
+
+  const sorted = [...grouped].sort((a, b) => {
     let cmp = 0
-    if (sortKey === 'pedido') cmp = Number(a.pedido) - Number(b.pedido)
-    else if (sortKey === 'qtde' || sortKey === 'preco' || sortKey === 'total') cmp = a[sortKey] - b[sortKey]
-    else if (sortKey === 'data') cmp = a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join(''))
-    else cmp = String(a[sortKey]).localeCompare(String(b[sortKey]), 'pt-BR')
+    if (sortKey === 'pedido')      cmp = Number(a.header.pedido) - Number(b.header.pedido)
+    else if (sortKey === 'data')   cmp = a.header.data.split('/').reverse().join('').localeCompare(b.header.data.split('/').reverse().join(''))
+    else if (sortKey === 'qtde')   cmp = a.qtdeTotal - b.qtdeTotal
+    else if (sortKey === 'total')  cmp = a.header.totalLiquido - b.header.totalLiquido
+    else if (sortKey === 'itens')  cmp = a.totalItens - b.totalItens
+    else cmp = String(a.header[sortKey as keyof PedidoItem]).localeCompare(String(b.header[sortKey as keyof PedidoItem]), 'pt-BR')
     return sortDir === 'asc' ? cmp : -cmp
   })
 
@@ -50,11 +72,10 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
     { key: 'data',        label: 'Data'        },
     { key: 'cliente',     label: 'Cliente'     },
     { key: 'municipio',   label: 'Mun./UF'     },
-    { key: 'produto',     label: 'Produto'     },
     { key: 'tabelaPreco', label: 'Tabela'      },
     { key: 'planoPagto',  label: 'Plano Pagto' },
-    { key: 'qtde',        label: 'Qtde'        },
-    { key: 'preco',       label: 'Preço'       },
+    { key: 'itens',       label: 'Itens'       },
+    { key: 'qtde',        label: 'Qtde Total'  },
     { key: 'total',       label: 'Total'       },
   ]
 
@@ -63,10 +84,10 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
     return <span style={{ color: 'var(--accent)' }}>{sortDir === 'asc' ? '↑' : '↓'}</span>
   }
 
-  if (items.length === 0) {
+  if (grouped.length === 0) {
     return (
       <div className="text-center py-16" style={{ color: 'var(--muted)' }}>
-        Nenhum item encontrado
+        Nenhum pedido encontrado
       </div>
     )
   }
@@ -83,70 +104,67 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
                   <th
                     key={c.key}
                     onClick={() => handleSort(c.key)}
-                    className="px-3 py-3 text-left font-semibold cursor-pointer select-none whitespace-nowrap"
+                    className="px-2 py-2.5 text-left font-semibold cursor-pointer select-none whitespace-nowrap text-xs"
                     style={{ color: 'var(--highlight)', borderBottom: '1px solid var(--border)' }}
                   >
                     {c.label} <Arrow col={c.key} />
                   </th>
                 ))}
-                <th className="px-3 py-3 text-left font-semibold whitespace-nowrap"
+                <th className="px-2 py-2.5 text-left font-semibold whitespace-nowrap text-xs"
                     style={{ color: 'var(--highlight)', borderBottom: '1px solid var(--border)' }}>
                   Situação
                 </th>
               </tr>
             </thead>
             <tbody>
-              {sorted.map((item, idx) => (
+              {sorted.map(({ header, qtdeTotal, totalItens }, idx) => (
                 <tr
-                  key={`${item.pedido}-${idx}`}
+                  key={header.pedido}
                   style={{
                     background: idx % 2 === 0 ? 'var(--surface)' : 'var(--bg)',
                     borderBottom: '1px solid var(--border)',
                   }}
                 >
-                  <td className="px-3 py-2.5">
+                  <td className="px-2 py-2">
                     <button
-                      onClick={() => setSelectedPedido(item.pedido)}
-                      className="font-mono font-medium underline-offset-2 hover:underline transition-opacity hover:opacity-80"
+                      onClick={() => setSelectedPedido(header.pedido)}
+                      className="font-mono font-medium text-xs underline-offset-2 hover:underline transition-opacity hover:opacity-80"
                       style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
-                      aria-label={`Ver detalhes do pedido ${item.pedido}`}
+                      aria-label={`Ver detalhes do pedido ${header.pedido}`}
                     >
-                      #{item.pedido}
+                      #{header.pedido}
                     </button>
                   </td>
-                  <td className="px-3 py-2.5 whitespace-nowrap font-mono text-xs" style={{ color: 'var(--muted)' }}>
-                    {item.data}
+                  <td className="px-2 py-2 whitespace-nowrap font-mono text-xs" style={{ color: 'var(--muted)' }}>
+                    {header.data}
                   </td>
-                  <td className="px-3 py-2.5 max-w-48 truncate" style={{ color: 'var(--text)' }} title={item.cliente}>
-                    {item.cliente}
+                  <td className="px-2 py-2 text-xs" style={{ color: 'var(--text)', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={header.cliente}>
+                    {header.cliente}
                   </td>
-                  <td className="px-3 py-2.5 whitespace-nowrap text-xs" style={{ color: 'var(--muted)' }}>
-                    {item.municipio}{item.estado ? ` · ${item.estado}` : ''}
+                  <td className="px-2 py-2 whitespace-nowrap text-xs" style={{ color: 'var(--muted)' }}>
+                    {header.municipio && header.estado ? `${header.municipio} · ${header.estado}` : header.municipio || header.estado || '—'}
                   </td>
-                  <td className="px-3 py-2.5 max-w-52 truncate" style={{ color: 'var(--muted)' }} title={item.produto}>
-                    {item.produto}
+                  <td className="px-2 py-2 whitespace-nowrap text-xs" style={{ color: 'var(--highlight)' }}>
+                    {header.tabelaPreco}
                   </td>
-                  <td className="px-3 py-2.5 whitespace-nowrap text-xs" style={{ color: 'var(--highlight)' }}>
-                    {item.tabelaPreco}
+                  <td className="px-2 py-2 whitespace-nowrap text-xs" style={{ color: 'var(--muted)' }}>
+                    {header.planoPagto}
                   </td>
-                  <td className="px-3 py-2.5 whitespace-nowrap text-xs" style={{ color: 'var(--muted)' }}>
-                    {item.planoPagto}
+                  <td className="px-2 py-2 text-right text-xs" style={{ color: 'var(--muted)' }}>
+                    {totalItens}
                   </td>
-                  <td className="px-3 py-2.5 text-right font-medium" style={{ color: 'var(--accent)' }}>
-                    {item.qtde.toLocaleString('pt-BR')}
+                  <td className="px-2 py-2 text-right text-xs font-medium" style={{ color: 'var(--accent)' }}>
+                    {qtdeTotal.toLocaleString('pt-BR')}
                   </td>
-                  <td className="px-3 py-2.5 text-right" style={{ color: 'var(--amber)' }}>
-                    R$ {fmt(item.preco)}
+                  <td className="px-2 py-2 text-right text-xs font-bold" style={{ color: 'var(--amber)' }}>
+                    R$ {fmt(header.totalLiquido)}
                   </td>
-                  <td className="px-3 py-2.5 text-right font-bold" style={{ color: 'var(--amber)' }}>
-                    R$ {fmt(item.total)}
-                  </td>
-                  <td className="px-3 py-2.5">
+                  <td className="px-2 py-2">
                     <span
-                      className="text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap"
-                      style={{ color: situacaoBadge(item.situacao), background: 'var(--surface2)' }}
+                      className="text-xs px-1.5 py-0.5 rounded-full font-medium whitespace-nowrap"
+                      style={{ color: situacaoBadge(header.situacao), background: 'var(--surface2)' }}
                     >
-                      {item.situacao}
+                      {header.situacao}
                     </span>
                   </td>
                 </tr>
@@ -154,15 +172,17 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
             </tbody>
             <tfoot>
               <tr style={{ background: 'var(--surface2)', borderTop: '2px solid var(--border)' }}>
-                <td colSpan={7} className="px-3 py-2.5 text-xs font-medium" style={{ color: 'var(--muted)' }}>
-                  {items.length} itens · {new Set(items.map(i => i.pedido)).size} pedidos
+                <td colSpan={6} className="px-2 py-2 text-xs font-medium" style={{ color: 'var(--muted)' }}>
+                  {grouped.length} pedidos · {items.length} itens
                 </td>
-                <td className="px-3 py-2.5 text-right font-bold" style={{ color: 'var(--accent)' }}>
-                  {sorted.reduce((s, i) => s + i.qtde, 0).toLocaleString('pt-BR')}
+                <td className="px-2 py-2 text-right text-xs font-medium" style={{ color: 'var(--muted)' }}>
+                  {sorted.reduce((s, g) => s + g.totalItens, 0)}
                 </td>
-                <td />
-                <td className="px-3 py-2.5 text-right font-bold" style={{ color: 'var(--amber)' }}>
-                  R$ {fmt(sorted.reduce((s, i) => s + i.total, 0))}
+                <td className="px-2 py-2 text-right text-xs font-bold" style={{ color: 'var(--accent)' }}>
+                  {sorted.reduce((s, g) => s + g.qtdeTotal, 0).toLocaleString('pt-BR')}
+                </td>
+                <td className="px-2 py-2 text-right text-xs font-bold" style={{ color: 'var(--amber)' }}>
+                  R$ {fmt(sorted.reduce((s, g) => s + g.header.totalLiquido, 0))}
                 </td>
                 <td />
               </tr>
@@ -173,9 +193,9 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
 
       {/* Mobile cards */}
       <div className="flex md:hidden flex-col gap-3">
-        {sorted.map((item, idx) => (
+        {sorted.map(({ header, qtdeTotal, totalItens }, idx) => (
           <div
-            key={`${item.pedido}-${idx}`}
+            key={header.pedido}
             className="rounded-xl p-4"
             style={{
               background: 'var(--surface)',
@@ -186,52 +206,51 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
             <div className="flex justify-between items-start mb-1">
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setSelectedPedido(item.pedido)}
+                  onClick={() => setSelectedPedido(header.pedido)}
                   className="font-mono font-semibold underline-offset-2 hover:underline"
                   style={{ color: 'var(--accent)', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
-                  aria-label={`Ver detalhes do pedido ${item.pedido}`}
+                  aria-label={`Ver detalhes do pedido ${header.pedido}`}
                 >
-                  #{item.pedido}
+                  #{header.pedido}
                 </button>
                 <span
                   className="text-xs px-1.5 py-0.5 rounded-full"
-                  style={{ color: situacaoBadge(item.situacao), background: 'var(--surface2)' }}
+                  style={{ color: situacaoBadge(header.situacao), background: 'var(--surface2)' }}
                 >
-                  {item.situacao}
+                  {header.situacao}
                 </span>
               </div>
               <div className="text-right">
                 <span className="font-bold text-sm" style={{ color: 'var(--amber)' }}>
-                  R$ {fmt(item.total)}
+                  R$ {fmt(header.totalLiquido)}
                 </span>
-                <p className="text-xs font-mono" style={{ color: 'var(--muted)' }}>{item.data}</p>
+                <p className="text-xs font-mono" style={{ color: 'var(--muted)' }}>{header.data}</p>
               </div>
             </div>
             <p className="text-sm font-medium mb-0.5 truncate" style={{ color: 'var(--text)' }}>
-              {item.cliente}
+              {header.cliente}
             </p>
-            <p className="text-xs mb-1 leading-snug" style={{ color: 'var(--muted)' }}>
-              {item.produto}
-            </p>
-            <div className="flex gap-3 text-xs mb-2">
-              {item.tabelaPreco && (
-                <span style={{ color: 'var(--highlight)' }}>{item.tabelaPreco}</span>
+            <div className="flex gap-3 text-xs mb-1">
+              {header.tabelaPreco && (
+                <span style={{ color: 'var(--highlight)' }}>{header.tabelaPreco}</span>
               )}
-              {item.planoPagto && (
-                <span style={{ color: 'var(--muted)' }}>{item.planoPagto}</span>
+              {header.planoPagto && (
+                <span style={{ color: 'var(--muted)' }}>{header.planoPagto}</span>
               )}
             </div>
             <div className="flex gap-4 text-xs">
               <span style={{ color: 'var(--muted)' }}>
-                {item.municipio}{item.estado ? ` · ${item.estado}` : ''}
+                {header.municipio}{header.estado ? ` · ${header.estado}` : ''}
               </span>
               <span>
                 <span style={{ color: 'var(--muted)' }}>Qtde: </span>
                 <span className="font-medium" style={{ color: 'var(--accent)' }}>
-                  {item.qtde.toLocaleString('pt-BR')} {item.unidade}
+                  {qtdeTotal.toLocaleString('pt-BR')}
                 </span>
               </span>
-              <span style={{ color: 'var(--amber)' }}>R$ {fmt(item.preco)}/un</span>
+              <span style={{ color: 'var(--muted)' }}>
+                {totalItens} {totalItens === 1 ? 'item' : 'itens'}
+              </span>
             </div>
           </div>
         ))}
