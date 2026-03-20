@@ -5,6 +5,7 @@ import AdminLayout from './AdminLayout'
 import VendorList from './VendorList'
 import PasswordForm from './PasswordForm'
 import AdminOverview from './AdminOverview'
+import ConsultasOperacionais from './ConsultasOperacionais'
 import type { SituacaoStat } from './AdminOverview'
 
 interface Props {
@@ -16,9 +17,10 @@ export default function AdminClientShell({ situacao }: Props) {
 
   return (
     <AdminLayout activeSection={section} onSectionChange={setSection}>
-      {section === 'overview' && <AdminOverview situacao={situacao} />}
-      {section === 'vendors'  && <VendorList />}
+      {section === 'overview'  && <AdminOverview situacao={situacao} />}
+      {section === 'vendors'   && <VendorList />}
       {section === 'passwords' && <PasswordForm />}
+      {section === 'consultas' && <ConsultasOperacionais />}
     </AdminLayout>
   )
 }

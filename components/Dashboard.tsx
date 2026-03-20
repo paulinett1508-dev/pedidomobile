@@ -17,7 +17,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ meta, items, isAdmin, children }: DashboardProps) {
-  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
+  const [filters, setFilters] = useState<Filters>({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '', dataInicio: '', dataFim: '' })
 
   const filtered = useMemo(() => {
     return items.filter(item => {
@@ -27,6 +27,13 @@ export default function Dashboard({ meta, items, isAdmin, children }: DashboardP
       if (filters.estado      && item.estado      !== filters.estado)      return false
       if (filters.tabelaPreco && item.tabelaPreco !== filters.tabelaPreco) return false
       if (filters.planoPagto  && item.planoPagto  !== filters.planoPagto)  return false
+      if (filters.dataInicio || filters.dataFim) {
+        // item.data is dd/mm/yyyy; convert to yyyy-mm-dd for comparison
+        const [d, m, y] = item.data.split('/')
+        const itemDate = `${y}-${m}-${d}`
+        if (filters.dataInicio && itemDate < filters.dataInicio) return false
+        if (filters.dataFim   && itemDate > filters.dataFim)   return false
+      }
       if (filters.search) {
         const q = filters.search.toLowerCase()
         return (

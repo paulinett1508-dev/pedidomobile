@@ -11,6 +11,8 @@ export interface Filters {
   estado:      string
   tabelaPreco: string
   planoPagto:  string
+  dataInicio:  string
+  dataFim:     string
 }
 
 interface FilterBarProps {
@@ -60,10 +62,10 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
   const tabelas     = Array.from(new Set(items.map(i => i.tabelaPreco).filter(Boolean))).sort()
   const planos      = Array.from(new Set(items.map(i => i.planoPagto).filter(Boolean))).sort()
 
-  const activeCount = [filters.cliente, filters.pedido, filters.situacao, filters.estado, filters.tabelaPreco, filters.planoPagto].filter(Boolean).length
+  const activeCount = [filters.cliente, filters.pedido, filters.situacao, filters.estado, filters.tabelaPreco, filters.planoPagto, filters.dataInicio, filters.dataFim].filter(Boolean).length
 
   function clear() {
-    onChange({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '' })
+    onChange({ search: '', cliente: '', pedido: '', situacao: '', estado: '', tabelaPreco: '', planoPagto: '', dataInicio: '', dataFim: '' })
     setDrawerOpen(false)
   }
 
@@ -83,6 +85,33 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
             color: 'var(--text)',
           }}
         />
+        <div className="flex items-center gap-1.5">
+          <input
+            type="date"
+            title="De:"
+            value={filters.dataInicio}
+            onChange={e => onChange({ ...filters, dataInicio: e.target.value })}
+            className="px-3 py-2 rounded-lg text-sm outline-none"
+            style={{
+              background: 'var(--surface)',
+              border: `1px solid ${filters.dataInicio ? 'var(--amber)' : 'var(--border)'}`,
+              color: filters.dataInicio ? 'var(--text)' : 'var(--muted)',
+            }}
+          />
+          <span className="text-xs shrink-0" style={{ color: 'var(--muted)' }}>até</span>
+          <input
+            type="date"
+            title="Até:"
+            value={filters.dataFim}
+            onChange={e => onChange({ ...filters, dataFim: e.target.value })}
+            className="px-3 py-2 rounded-lg text-sm outline-none"
+            style={{
+              background: 'var(--surface)',
+              border: `1px solid ${filters.dataFim ? 'var(--amber)' : 'var(--border)'}`,
+              color: filters.dataFim ? 'var(--text)' : 'var(--muted)',
+            }}
+          />
+        </div>
         <select
           value={filters.situacao}
           onChange={e => onChange({ ...filters, situacao: e.target.value })}
@@ -226,6 +255,34 @@ export default function FilterBar({ items, filters, onChange }: FilterBarProps) 
               </button>
             </div>
 
+            <div>
+              <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted)' }}>Período</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="date"
+                  value={filters.dataInicio}
+                  onChange={e => onChange({ ...filters, dataInicio: e.target.value })}
+                  className="flex-1 px-3 py-2.5 rounded-lg text-sm outline-none"
+                  style={{
+                    background: 'var(--surface2)',
+                    border: `1px solid ${filters.dataInicio ? 'var(--amber)' : 'var(--border)'}`,
+                    color: 'var(--text)',
+                  }}
+                />
+                <span className="text-xs shrink-0" style={{ color: 'var(--muted)' }}>até</span>
+                <input
+                  type="date"
+                  value={filters.dataFim}
+                  onChange={e => onChange({ ...filters, dataFim: e.target.value })}
+                  className="flex-1 px-3 py-2.5 rounded-lg text-sm outline-none"
+                  style={{
+                    background: 'var(--surface2)',
+                    border: `1px solid ${filters.dataFim ? 'var(--amber)' : 'var(--border)'}`,
+                    color: 'var(--text)',
+                  }}
+                />
+              </div>
+            </div>
             <SelectField label="Situação" value={filters.situacao} options={situacoes}
               placeholder="Todas as situações" onChange={v => onChange({ ...filters, situacao: v })} />
             <SelectField label="Estado (UF)" value={filters.estado} options={estados}
