@@ -6,15 +6,7 @@ interface PageProps {
   params: { id: string }
 }
 
-export const dynamicParams = false
-
-export async function generateStaticParams() {
-  return [
-    '031','132','200','216','217','224','225','227',
-    '231','237','240','245','248','251','252','254',
-    '256','257','258','259','260',
-  ].map(id => ({ id }))
-}
+export const dynamic = 'force-dynamic'
 
 export default async function AdminRcaPage({ params }: PageProps) {
   const meta = getRcaMeta(params.id)
