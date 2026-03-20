@@ -50,7 +50,11 @@ export default function LoginPage() {
 
       <div
         className="w-full max-w-sm rounded-2xl p-8 flex flex-col gap-6"
-        style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid rgba(184, 122, 10, 0.55)',
+          boxShadow: '0 0 0 1px rgba(184, 122, 10, 0.12), 0 4px 24px rgba(184, 122, 10, 0.08)',
+        }}
       >
         <div className="flex justify-center">
           <Logo size="lg" />
@@ -58,10 +62,10 @@ export default function LoginPage() {
 
         <div>
           <h1 className="text-xl font-bold text-center" style={{ color: 'var(--text)' }}>
-            Entrar
+            Sistema de Consultas
           </h1>
           <p className="text-sm text-center mt-1" style={{ color: 'var(--muted)' }}>
-            Laboratório Sobral
+            PEDIDO MOBILE
           </p>
         </div>
 
@@ -80,7 +84,7 @@ export default function LoginPage() {
               className="w-full px-3 py-3 rounded-xl text-sm outline-none focus:ring-2 transition-all"
               style={{
                 background: 'var(--surface2)',
-                border: '1px solid var(--border)',
+                border: '1px solid rgba(184, 122, 10, 0.35)',
                 color: 'var(--text)',
               }}
             />
@@ -101,7 +105,7 @@ export default function LoginPage() {
                 className="w-full px-3 py-3 pr-11 rounded-xl text-sm outline-none focus:ring-2 transition-all"
                 style={{
                   background: 'var(--surface2)',
-                  border: '1px solid var(--border)',
+                  border: '1px solid rgba(184, 122, 10, 0.35)',
                   color: 'var(--text)',
                 }}
               />
@@ -143,6 +147,14 @@ export default function LoginPage() {
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
+
+        <div className="flex justify-center pt-1">
+          <img
+            src="/logo.svg"
+            alt="Pedido Mobile"
+            className="h-7 opacity-50"
+          />
+        </div>
       </div>
     </div>
   )
