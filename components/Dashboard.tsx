@@ -141,7 +141,7 @@ export default function Dashboard({ meta, items, isAdmin }: DashboardProps) {
         <KpiStrip items={items} filtered={filtered} />
         <MiniCharts items={filtered} />
         <FilterBar items={items} filters={filters} onChange={setFilters} />
-        <PedidosTable items={filtered} />
+        <PedidosTable items={filtered} allItems={items} meta={meta} />
 
         <footer className="mt-10 flex flex-col items-center gap-2 pb-6" style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
           <img src="/logo_sobral.svg" alt="Laboratório Sobral" className="h-16 opacity-70" />
