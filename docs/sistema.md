@@ -47,6 +47,7 @@ app/
     admin/password/       ← PATCH: troca senha (admin) → persiste via Vercel Blob
     admin/vendors/        ← GET/POST: lista/cria vendedores
     admin/vendors/[id]/   ← PATCH/DELETE: edita/remove vendedor
+    admin/consulta/       ← GET: consulta cross-representada com filtros (admin only)
 
 components/
   Logo.tsx                ← Logo do sistema (fallback texto se SVG ausente)
@@ -54,18 +55,19 @@ components/
   Dashboard.tsx           ← Layout standalone do vendedor/admin-rca (header + aviso + conteúdo)
   KpiStrip.tsx            ← 6 KPIs: linhas, pedidos, clientes, qtde total/filtrada, valor
   MiniCharts.tsx          ← Top clientes e top produtos (desktop only, hidden mobile)
-  FilterBar.tsx           ← Filtros: busca texto, cliente, pedido, situação, estado, tabela, plano
+  FilterBar.tsx           ← Filtros: busca texto, intervalo de datas (De/Até), cliente, pedido, situação, estado, tabela, plano
   PedidosTable.tsx        ← Tabela de pedidos agrupados (1 linha = 1 pedido distinto)
   PedidoModal.tsx         ← Modal "espelho do pedido" com PDF export
 
   admin/
-    AdminLayout.tsx       ← Layout admin: sidebar desktop (240px) + bottom nav mobile
-    AdminClientShell.tsx  ← Client shell: useState para navegação entre seções
-    AdminOverview.tsx     ← Visão Geral: KPIs, situação real, filtros, ranking clicável
-    RcaSummaryHeader.tsx  ← Header de stats da representada (server component)
-    VendorList.tsx        ← Lista e gerencia vendedores
-    VendorForm.tsx        ← Formulário de criação/edição de vendedor
-    PasswordForm.tsx      ← Troca de senha via API
+    AdminLayout.tsx           ← Layout admin: sidebar com grupos colapsáveis + bottom nav mobile
+    AdminClientShell.tsx      ← Client shell: useState para navegação entre seções
+    AdminOverview.tsx         ← Visão Geral: KPIs, situação real, filtros, ranking clicável
+    RcaSummaryHeader.tsx      ← Header de stats da representada (server component)
+    ConsultasOperacionais.tsx ← Consultas cross-representada com filtros combinados
+    VendorList.tsx            ← Lista e gerencia vendedores
+    VendorForm.tsx            ← Formulário de criação/edição de vendedor
+    PasswordForm.tsx          ← Troca de senha via API
 
 lib/
   types.ts                ← Interfaces: PedidoItem, RcaMeta, UsersFile, SessionPayload
@@ -126,7 +128,7 @@ Extraídos da API pedidomobile.com em uma única extração. Imutáveis — nunc
 interface PedidoItem {
   pedido:          string   // número do pedido
   data:            string   // "dd/mm/yyyy"
-  situacao:        string   // "Faturado" | "Cancelado" | "Pendente" | outros
+  situacao:        string   // "Faturado" | "Cancelado" | "Em processamento" | "Em carteira" | "Enviado" | "Recepcionado"
   codCliente:      string   // CNPJ do cliente
   cliente:         string   // "código - NOME DO CLIENTE"
   clienteFantasia: string
@@ -216,7 +218,7 @@ Senhas são armazenadas como hashes bcrypt no `data/users.json`. Em produção (
 **Dashboard** com:
 - **KPI Strip** — 6 indicadores em grid responsivo: Linhas de Item, Pedidos, Clientes, Qtde Total, Qtde Filtrada, Valor Filtrado
 - **MiniCharts** (desktop) — Top clientes por valor + Top produtos por quantidade
-- **FilterBar** — 7 filtros combinados: busca texto livre, cliente, número do pedido, situação, estado, tabela de preço, plano de pagamento
+- **FilterBar** — 9 filtros combinados: busca texto livre, intervalo de datas (De/Até), cliente, número do pedido, situação, estado, tabela de preço, plano de pagamento
 - **PedidosTable** — tabela agrupada (1 linha por pedido distinto, não por item):
   - Colunas: Pedido, Data, Situação, Cliente, Município/UF, Tabela, Plano, Itens, Qtde, Total Líquido
   - Ordenação por qualquer coluna (clique no header)
@@ -258,13 +260,25 @@ Estrutura da página (de cima para baixo):
    - Top 5 produtos por quantidade (barras relativas)
 5. **Dashboard completo** — igual ao view do vendedor (KPI Strip, MiniCharts, FilterBar, PedidosTable, PedidoModal)
 
-#### Vendedores
+#### Consultas Operacionais
+
+Nova seção no painel admin com busca cross-representada:
+
+- **Filtros disponíveis:** representada (dropdown com matrícula + nome), situação, UF, busca texto livre, intervalo de datas (De/Até)
+- **API:** `GET /api/admin/consulta` — carrega todos os JSONs em paralelo, aplica filtros, agrupa por pedido único (chave `rcaId+pedido`), retorna lista ordenada por data decrescente
+- **Resultado:** tabela desktop com colunas (Pedido, Data, Representada, Município/UF, Itens, Total Líquido, Situação) + cards mobile com borda colorida por situação
+- **Estado inicial:** tela vazia com instrução — dados só carregam ao clicar em "Consultar"
+- **Performance:** delay de 3–5s aceitável dado o volume (~47k itens carregados server-side)
+
+#### Configurações (grupo colapsável no sidebar)
+
+**Vendedores**
 - Listar todos os vendedores cadastrados
 - Criar novo vendedor (matrícula + nome)
 - Editar nome de vendedor existente
 - Remover vendedor
 
-#### Senhas
+**Senhas**
 - Trocar senha dos vendedores (hash único compartilhado por todos)
 - Trocar senha do admin
 
@@ -279,7 +293,7 @@ Estrutura da página (de cima para baixo):
 | FilterBar | botão "Filtrar" + bottom drawer | inline com selects |
 | PedidosTable | cards empilhados, borda-left colorida | tabela completa com sort |
 | PedidoModal | full screen | modal centralizado |
-| Admin nav | bottom navigation fixo | sidebar 224px sticky |
+| Admin nav | bottom navigation fixo (todos os itens) | sidebar 224px sticky com grupos colapsáveis |
 | Admin top row | grid 2 colunas | grid 5 colunas (stretch) |
 | Admin ranking | cards empilhados | tabela com colunas ordenáveis |
 
@@ -339,6 +353,10 @@ npm run lint     # ESLint
 
 | Commit | Descrição |
 |---|---|
+| `0619a1e` | Sidebar: grupos colapsáveis com animação de chevron |
+| `06e803a` | Sidebar: seções "Painel" e "Configurações" (Vendedores + Senhas) |
+| `bffdcdf` | Consultas: dropdown representada com matrícula + nome; todas as 6 situações |
+| `e82b835` | Filtro de data (De/Até) no FilterBar + nova seção Consultas Operacionais |
 | `2f2581a` | Situação dos Pedidos: dados reais calculados dos rca-*.json |
 | `c4e9721` | Header full-width no topo, faixa de aviso full-width |
 | `ef20586` | Ranking: rows uniformes, colunas ordenáveis, fonte maior |
