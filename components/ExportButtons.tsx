@@ -11,6 +11,7 @@ interface ExportButtonsProps {
   headers: string[]
   getRows: () => (string | number)[][]
   size?: 'sm' | 'md'
+  hidePdf?: boolean
 }
 
 export default function ExportButtons({
@@ -21,6 +22,7 @@ export default function ExportButtons({
   headers,
   getRows,
   size = 'sm',
+  hidePdf = false,
 }: ExportButtonsProps) {
   const [loadingXls, setLoadingXls] = useState(false)
   const [loadingPdf, setLoadingPdf] = useState(false)
@@ -59,20 +61,22 @@ export default function ExportButtons({
         {loadingXls ? '…' : 'Excel'}
       </button>
 
-      <button
-        onClick={handlePdf}
-        disabled={loadingPdf}
-        title="Exportar PDF"
-        className={`${px} ${txt} rounded-lg font-medium flex items-center gap-1.5 transition-opacity hover:opacity-80 disabled:opacity-50`}
-        style={{ background: 'var(--surface2)', color: 'var(--danger)', border: '1px solid var(--border)' }}
-      >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="9" y1="15" x2="15" y2="15"/>
-        </svg>
-        {loadingPdf ? '…' : 'PDF'}
-      </button>
+      {!hidePdf && (
+        <button
+          onClick={handlePdf}
+          disabled={loadingPdf}
+          title="Exportar PDF"
+          className={`${px} ${txt} rounded-lg font-medium flex items-center gap-1.5 transition-opacity hover:opacity-80 disabled:opacity-50`}
+          style={{ background: 'var(--surface2)', color: 'var(--danger)', border: '1px solid var(--border)' }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+          {loadingPdf ? '…' : 'PDF'}
+        </button>
+      )}
     </div>
   )
 }

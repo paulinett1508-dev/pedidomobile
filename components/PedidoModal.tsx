@@ -112,6 +112,7 @@ export default function PedidoModal({ items, meta, onClose }: PedidoModalProps) 
           <div className="flex items-center gap-2 shrink-0 ml-2">
             <ExportButtons
               size="md"
+              hidePdf
               filename={`pedido-${header?.pedido ?? 'XXX'}`}
               pdfTitle={`Pedido #${header?.pedido ?? 'XXX'} — ${meta.representada}`}
               pdfSubtitle={`Cliente: ${header?.cliente ?? ''} · Data: ${header?.data ?? ''}`}
