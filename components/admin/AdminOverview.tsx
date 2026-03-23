@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { getAllRcaIds, getRcaMeta } from '@/lib/data'
+import ExportButtons from '@/components/ExportButtons'
 
 const COUNTS: Record<string, { itens: number; pedidos: number }> = {
   '031': { itens: 5479,  pedidos: 565  },
@@ -237,15 +238,25 @@ export default function AdminOverview({ situacao }: { situacao: SituacaoStat[] }
 
         {/* Title bar */}
         <div
-          className="px-5 py-3 flex items-center justify-between"
+          className="px-5 py-3 flex items-center justify-between gap-3"
           style={{ background: 'var(--surface2)', borderBottom: '1px solid var(--border)' }}
         >
           <span className="text-sm font-bold uppercase tracking-wider" style={{ color: 'var(--highlight)' }}>
             Representadas
           </span>
-          <span className="text-xs" style={{ color: 'var(--muted)' }}>
-            {filtered.length} de {allRows.length}
-          </span>
+          <div className="flex items-center gap-3">
+            <ExportButtons
+              filename="representadas"
+              pdfTitle="Ranking de Representadas"
+              pdfSubtitle={`${filtered.length} representadas · dados até 31/12/2025`}
+              sheetName="Representadas"
+              headers={['Matrícula', 'Representada', 'Pedidos', 'Itens']}
+              getRows={() => filtered.map(r => [r.id, r.meta.representada, r.counts.pedidos, r.counts.itens])}
+            />
+            <span className="text-xs" style={{ color: 'var(--muted)' }}>
+              {filtered.length} de {allRows.length}
+            </span>
+          </div>
         </div>
 
         {/* Column headers (desktop) */}

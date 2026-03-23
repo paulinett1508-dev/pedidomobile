@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import type { PedidoItem, RcaMeta } from '@/lib/types'
 import PedidoModal from './PedidoModal'
+import ExportButtons from './ExportButtons'
 
 interface PedidosTableProps {
   items: PedidoItem[]
@@ -82,6 +83,23 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
   function Arrow({ col }: { col: SortKey }) {
     if (sortKey !== col) return <span style={{ opacity: 0.3 }}>↕</span>
     return <span style={{ color: 'var(--accent)' }}>{sortDir === 'asc' ? '↑' : '↓'}</span>
+  }
+
+  const EXPORT_HEADERS = ['Pedido', 'Data', 'Situação', 'Cliente', 'Município', 'UF', 'Tabela', 'Plano Pagto', 'Itens', 'Qtde Total', 'Total Líquido (R$)']
+  function getExportRows() {
+    return sorted.map(({ header, qtdeTotal, totalItens }) => [
+      `#${header.pedido}`,
+      header.data,
+      header.situacao,
+      header.cliente,
+      header.municipio,
+      header.estado,
+      header.tabelaPreco,
+      header.planoPagto,
+      totalItens,
+      qtdeTotal,
+      header.totalLiquido,
+    ])
   }
 
   if (grouped.length === 0) {
@@ -172,8 +190,18 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
             </tbody>
             <tfoot>
               <tr style={{ background: 'var(--surface2)', borderTop: '2px solid var(--border)' }}>
-                <td colSpan={6} className="px-2 py-2 text-xs font-medium" style={{ color: 'var(--muted)' }}>
+                <td colSpan={3} className="px-2 py-2 text-xs font-medium" style={{ color: 'var(--muted)' }}>
                   {grouped.length} pedidos · {items.length} itens
+                </td>
+                <td colSpan={3} className="px-2 py-2">
+                  <ExportButtons
+                    filename={`pedidos-${meta.id}`}
+                    pdfTitle={`Pedidos — ${meta.representada ?? `RCA ${meta.id}`}`}
+                    pdfSubtitle={`${grouped.length} pedidos · ${items.length} itens`}
+                    sheetName="Pedidos"
+                    headers={EXPORT_HEADERS}
+                    getRows={getExportRows}
+                  />
                 </td>
                 <td className="px-2 py-2 text-right text-xs font-medium" style={{ color: 'var(--muted)' }}>
                   {sorted.reduce((s, g) => s + g.totalItens, 0)}
@@ -189,6 +217,19 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
             </tfoot>
           </table>
         </div>
+      </div>
+
+      {/* Mobile export */}
+      <div className="flex md:hidden items-center justify-between py-2">
+        <span className="text-xs" style={{ color: 'var(--muted)' }}>{grouped.length} pedidos</span>
+        <ExportButtons
+          filename={`pedidos-${meta.id}`}
+          pdfTitle={`Pedidos — ${meta.representada ?? `RCA ${meta.id}`}`}
+          pdfSubtitle={`${grouped.length} pedidos`}
+          sheetName="Pedidos"
+          headers={EXPORT_HEADERS}
+          getRows={getExportRows}
+        />
       </div>
 
       {/* Mobile cards */}

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { PedidoItem, RcaMeta } from '@/lib/types'
+import ExportButtons from './ExportButtons'
 
 interface PedidoModalProps {
   items: PedidoItem[]
@@ -107,21 +108,38 @@ export default function PedidoModal({ items, meta, onClose }: PedidoModalProps) 
             <SituacaoBadge situacao={header.situacao} />
           </div>
 
-          {/* Right: PDF button + close */}
+          {/* Right: PDF + Excel + close */}
           <div className="flex items-center gap-2 shrink-0 ml-2">
+            <ExportButtons
+              size="md"
+              filename={`pedido-${header?.pedido ?? 'XXX'}`}
+              pdfTitle={`Pedido #${header?.pedido ?? 'XXX'} — ${meta.representada}`}
+              pdfSubtitle={`Cliente: ${header?.cliente ?? ''} · Data: ${header?.data ?? ''}`}
+              sheetName={`Pedido ${header?.pedido ?? ''}`}
+              headers={['#', 'Código', 'Produto', 'Unidade', 'Qtde', 'Preço Unit.', 'Desconto', 'Total']}
+              getRows={() => items.map((item, i) => [
+                i + 1,
+                item.codigo,
+                item.produto,
+                item.unidade,
+                item.qtde,
+                item.preco,
+                item.desconto > 0 ? `${item.desconto}%` : '',
+                item.total,
+              ])}
+            />
             <button
               onClick={() => handlePrint()}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
               style={{
                 background: 'var(--accent)',
                 color: '#fff',
               }}
             >
-              {/* Printer icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="15"
+                height="15"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

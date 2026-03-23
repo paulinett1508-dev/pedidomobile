@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import type { PedidoRow } from '@/app/api/admin/consulta/route'
+import ExportButtons from '@/components/ExportButtons'
 
 const RCAS: { id: string; nome: string }[] = [
   { id: '031', nome: 'THEODORO F SOBRAL E CIA LTDA' },
@@ -233,6 +234,27 @@ export default function ConsultasOperacionais() {
                 : `${total.toLocaleString('pt-BR')} pedido${total !== 1 ? 's' : ''} encontrado${total !== 1 ? 's' : ''}`
               }
             </p>
+            {total > 0 && (
+              <ExportButtons
+                filename="consulta-operacional"
+                pdfTitle="Consulta Operacional"
+                pdfSubtitle={`${total} pedidos encontrados · dados até 31/12/2025`}
+                sheetName="Consulta"
+                headers={['Pedido', 'Data', 'Matrícula', 'Representada', 'Cliente', 'Município', 'UF', 'Itens', 'Total Líquido (R$)', 'Situação']}
+                getRows={() => rows!.map(r => [
+                  `#${r.pedido}`,
+                  r.data,
+                  r.rcaId,
+                  r.representada,
+                  r.cliente,
+                  r.municipio,
+                  r.estado,
+                  r.itens,
+                  r.totalLiquido,
+                  r.situacao,
+                ])}
+              />
+            )}
           </div>
 
           {total > 0 && (
