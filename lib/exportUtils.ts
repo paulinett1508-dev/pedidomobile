@@ -11,7 +11,8 @@ export async function exportExcel(
   headers: string[],
   rows: (string | number)[][],
 ) {
-  const XLSX = (await import('xlsx')).default
+  const mod = await import('xlsx')
+  const XLSX = mod.default ?? mod
   const ws = XLSX.utils.aoa_to_sheet([headers, ...rows])
 
   // Largura automática das colunas
