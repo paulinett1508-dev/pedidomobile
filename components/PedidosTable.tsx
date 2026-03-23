@@ -112,6 +112,19 @@ export default function PedidosTable({ items, allItems, meta }: PedidosTableProp
 
   return (
     <>
+      {/* Desktop export bar */}
+      <div className="hidden md:flex items-center justify-between mb-3">
+        <span className="text-xs" style={{ color: 'var(--muted)' }}>{grouped.length} pedidos · {items.length} itens</span>
+        <ExportButtons
+          filename={`pedidos-${meta.id}`}
+          pdfTitle={`Pedidos — ${meta.representada ?? `RCA ${meta.id}`}`}
+          pdfSubtitle={`${grouped.length} pedidos · ${items.length} itens`}
+          sheetName="Pedidos"
+          headers={EXPORT_HEADERS}
+          getRows={getExportRows}
+        />
+      </div>
+
       {/* Desktop table */}
       <div className="hidden md:block rounded-xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
         <div className="overflow-x-auto">
