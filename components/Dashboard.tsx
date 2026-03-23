@@ -123,18 +123,20 @@ export default function Dashboard({ meta, items, isAdmin, children }: DashboardP
         </p>
       </div>
 
-      {/* Mobile vendor info sub-header */}
-      <div
-        className="md:hidden px-4 py-2 flex items-center gap-2"
-        style={{ background: 'var(--surface2)', borderBottom: '1px solid var(--border)' }}
-      >
-        <span className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: 'var(--amber)', color: '#fff' }}>
-          RCA {meta.id}
-        </span>
-        <span className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>
-          {meta.vendedor ?? meta.representada}
-        </span>
-      </div>
+      {/* Vendor info sub-header (all screen sizes) */}
+      {!isAdmin && (
+        <div
+          className="px-4 py-2 flex items-center gap-2"
+          style={{ background: 'var(--surface2)', borderBottom: '1px solid var(--border)' }}
+        >
+          <span className="text-xs px-2 py-0.5 rounded font-mono shrink-0" style={{ background: 'var(--amber)', color: '#fff' }}>
+            RCA {meta.id}
+          </span>
+          <span className="text-sm font-medium truncate" style={{ color: 'var(--text)' }}>
+            {meta.vendedor ?? meta.representada}
+          </span>
+        </div>
+      )}
 
       {/* Content */}
       <main className="px-4 py-6">
