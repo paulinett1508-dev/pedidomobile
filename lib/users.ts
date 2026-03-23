@@ -23,14 +23,15 @@ export async function getUsers(): Promise<UsersFile> {
   if (!token) return readLocalUsers()
 
   try {
-    const { list } = await import('@vercel/blob')
+    const { list, get } = await import('@vercel/blob')
     const { blobs } = await list({ prefix: BLOB_PREFIX, token })
     if (blobs.length > 0) {
       blobs.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime())
-      const res = await fetch(blobs[0].url, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      if (res.ok) return await res.json() as UsersFile
+      const result = await get(blobs[0].url, { token, access: 'private' })
+      if (result) {
+        const text = await new Response(result.stream).text()
+        return JSON.parse(text) as UsersFile
+      }
     }
   } catch (err) {
     console.error('[users] getUsers error:', err instanceof Error ? err.message : err)
