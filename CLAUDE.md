@@ -207,3 +207,23 @@ npm run lint     # ESLint
 - `npm run build` deve passar antes de qualquer commit
 - Os arquivos `data/rca-*.json` são imutáveis — nunca modificar via código
 - O campo `situacao` pode ser: "Faturado", "Cancelado", "Pendente" ou outros
+
+## Uso de Subagents
+
+- Use subagents para pesquisa, exploração e análise paralela — mantém o contexto principal limpo
+- Offload investigação de codebase, leitura de logs e tarefas independentes para subagents
+- Uma tarefa por subagent para execução focada; prefira paralelismo a execução sequencial
+- Para problemas complexos: jogue mais compute via subagents antes de travar o contexto principal
+
+## Verificação antes de Concluir
+
+- Nunca marque tarefa como concluída sem provar que funciona (diff, log, teste, screenshot)
+- Checagem mental obrigatória: *"Um senior engineer aprovaria esse diff?"*
+- Aplica-se a features e refactors — não apenas ao Bug Fix Protocol
+- Se algo parece incerto: demonstre a correção, não apenas afirme
+
+## Elegância (features não-triviais)
+
+- Para mudanças que tocam 3+ arquivos: pause e pergunte "há solução mais elegante?"
+- Se a solução parece hack: "sabendo tudo o que sei agora, qual é a implementação elegante?"
+- **Exceção obrigatória:** fixes simples e óbvios — não over-engenheirar, não buscar elegância onde ela não agrega
